@@ -1,7 +1,22 @@
 # ghmc
 
 This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
-version 0.15.1.
+-----------------------------------------
+#Installation
+
+download and install node.js
+download and install ruby
+
+use below cmds
+
+npm install -g grunt-cli bower yo
+npm install -g grunt
+npm install (in project directory ie.. GHMC)
+grunt clean
+grunt build
+grunt serve
+--------------------------------------------
+#version 0.15.1.
 
 ## Build & development
 
