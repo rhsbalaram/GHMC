@@ -30,8 +30,71 @@
 <div class="container-fluid">
 
 <div class="row">
-  <div class="col-md-8">
-  	<table class="table table-striped">
+  <div class="col-md-8" kt-sleek-scrollBar is-bar-shown="barShown">
+  <br/>
+    <form>
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+        <input type="text" class="form-control" placeholder="Search" ng-model="searchFish">
+      </div>      
+    </div>
+  </form>
+  
+  <table class="table table-bordered table-hover">
+    
+    <thead>
+      <tr>
+        <td>
+          <a href="" ng-click="sortType = 'created'; sortReverse = !sortReverse">
+            DATE / TIME
+            <span ng-show="sortType == 'created' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'created' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+        <td>
+          <a href="" ng-click="sortType = 'locationId'; sortReverse = !sortReverse">
+          LOCATION 
+            <span ng-show="sortType == 'locationId' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'locationId' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+        <td>
+          <a href="" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+          NAME 
+            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+        <td>
+          <a href="" ng-click="sortType = 'event'; sortReverse = !sortReverse">
+          ISSUE 
+            <span ng-show="sortType == 'event' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'event' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+        <td>
+          <a href="" ng-click="sortType = 'status'; sortReverse = !sortReverse">
+          STATUS 
+            <span ng-show="sortType == 'status' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'status' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <tr ng-click="setSelected(event.name)" class="linkStyle" ng-class="{selected : event.name === selectedValue}" ng-repeat="event in events | orderBy:sortType:sortReverse | filter:searchFish">
+        <td>{{ event.created }}</td>
+        <td>{{ event.locationId }}</td>
+        <td>{{ event.name }}</td>
+        <td>{{ event.event }}</td>
+        <td>{{ event.status }}</td>
+      </tr>
+    </tbody>
+    
+  </table>
+  	<!-- <table class="table table-striped">
     <thead>
       <tr>
         <th>Firstname</th>
@@ -116,17 +179,45 @@
         <td>july@example.com</td>
       </tr>
     </tbody>
-  </table>
+  </table> -->
   </div>
   <div class="col-md-4">
   	<div class="row">
-      <div class="col-md-12 box-blocks">
-      	asdf
+      <div class="col-md-12 box-blocks" id="map">
+      	<b>Map View Here</b>
       </div>
     </div>
+
     <div class="row">
-      <div class="col-md-12 box-blocks">
-      	asdf
+      <div class="col-md-12 box-blocks" id="images">
+      <div class="row">
+      <div class="col-md-6">
+      	<img src="https://www.w3schools.com/w3images/fjords.jpg" alt="Nature" style="width:100%;margin:5px">
+      </div>
+      <div class="col-md-6">
+      	<img src="https://www.w3schools.com/w3images/nature.jpg" alt="Nature" style="width:100%;margin:5px">
+      </div>
+      <div class="col-md-6">
+      	<img src="https://www.w3schools.com/w3images/lights.jpg" alt="Nature" style="width:100%;margin:5px">
+      </div>
+      <div class="col-md-6">
+      	<img src="https://www.w3schools.com/w3images/fjords.jpg" alt="Nature" style="width:100%;margin:5px">
+      </div>
+      <div class="col-md-6">
+      	<img src="https://www.w3schools.com/w3images/nature.jpg" alt="Nature" style="width:100%;margin:5px">
+      </div>
+      <div class="col-md-6">
+      	<img src="https://www.w3schools.com/w3images/lights.jpg" alt="Nature" style="width:100%;margin:5px">
+      </div>
+      <div class="col-md-6">
+      	<img src="https://www.w3schools.com/w3images/fjords.jpg" alt="Nature" style="width:100%;margin:5px">
+      </div>
+      <div class="col-md-6">
+      	<img src="https://www.w3schools.com/w3images/nature.jpg" alt="Nature" style="width:100%;margin:5px">
+      </div>
+      <div class="col-md-6">
+      	<img src="https://www.w3schools.com/w3images/lights.jpg" alt="Nature" style="width:100%;margin:5px">
+      </div>
       </div>
     </div>
 

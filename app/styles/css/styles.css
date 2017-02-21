@@ -2,11 +2,29 @@ body{
 	
 	margin:0px;
 }
+
+.linkStyle{
+	cursor: pointer;
+}
+
+
+.selected{
+	background: #deeade;
+}
+.selected:hover{
+	background: green;
+}
+.container-fluid
+{
+	padding-top: 10px;
+}
 .box-blocks{
-	    min-height: 350px;
+	    min-height: 250px;
+
     /* width: 450px; */
     border: 1px solid;
-    padding: 10px;
+    margin-bottom: 10px;
+   
 }
 
 .header-user-dropdown {
@@ -113,6 +131,7 @@ body{
 	font:bold 13px Arial, Helvetica, sans-serif;
 	background-color: inherit;
 	list-style: none;
+	z-index: 1;
 	position: absolute;
 	text-align: center;
 	width: 125px;

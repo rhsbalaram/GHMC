@@ -225,6 +225,23 @@ angular.module('ghmcApp')
                     });
                     return deferred.promise;
                 }
+
+                model.getEvents=function(){
+                var deferred = $q.defer(),
+                       events=Restangular.all('products'),
+                        userDetails = JSON.parse(model.getLoggedInUserDetails());
+console.log('products/'+userDetails.productId+'/events');
+                        events.get(userDetails.productId+'/events')
+                            .then(function(response) {
+                            	console.log('executed successfully');
+                            	
+                                deferred.resolve(response);
+                            }).catch(function() {
+                                deferred.reject(response);
+                            });
+
+                        return deferred.promise;	
+                };
  }]);
                 
 
