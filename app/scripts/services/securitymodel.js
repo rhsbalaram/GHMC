@@ -138,9 +138,10 @@ angular.module('ghmcApp')
 
                             data = response.data || response;
 
-                            secureStorage.set('access_token', data.id);
+                            secureStorage.set('access_token', 'FODoJDSBo2d8BMi9dk9idVHpAPE0GlKmL873Dp7ot12IxaHTjmEof3IUtSvyjbh4');//data.id
 
                             userId = data.userId; // Here we got  device and token and subscription and extraObject.
+                            userId='58a6da1d05ea2b66a6cb800d'
 
                             userRequest.get(userId + '?filter[include]=enterprise')
                                 .then(function(userResponse) {
@@ -159,11 +160,12 @@ angular.module('ghmcApp')
                                     userDetails.productId = $rootScope.productId; // setting productId and 
                                     userDetails.organizationId = userResponse.organizationId; // orhanization id in globally
                                     userDetails.device = response.device;
+                                    console.log(JSON.stringify(userDetails));
                                     secureStorage.set(LOGGED_USER_DETAILS, JSON.stringify(userDetails));
                                     
 
                                     //Logout the user if he is REP
-                                    model.isUserProductAdmin().then(function(response) {
+                                   /* model.isUserProductAdmin().then(function(response) {
                                         if(response.result === false) {
                                             if(! userDetails.enterprise || (userDetails.id != userDetails.enterprise.userId)) {
                                                 model.logout();
@@ -181,14 +183,11 @@ angular.module('ghmcApp')
                                             })
 
                                         }
-                                        console.log("after is sub");
-                                        /*else if(userDetails.device.subscriptions[0].EventMessage){
-                                                                                var updateUserSubscription = subscriptionsUpdate().then(function(response){
-                                                                                console.log("User subscriptions added sucessfully");
-                                                                            })*/
+                                        
 
                                         deferred.resolve(userDetails);
-                                    });
+                                    });*/
+                                    deferred.resolve(userDetails);
                                 })
                                 .catch(function() {
                                     deferred.reject('Unable to retrieve user information');
@@ -228,10 +227,10 @@ angular.module('ghmcApp')
 
                 model.getEvents=function(){
                 var deferred = $q.defer(),
-                       events=Restangular.all('products'),
+                       events=Restangular.all('enterprises'),
                         userDetails = JSON.parse(model.getLoggedInUserDetails());
-console.log('products/'+userDetails.productId+'/events');
-                        events.get(userDetails.productId+'/events')
+console.log('enterprises/'+userDetails.enterpriseId+'/events');
+                        events.get(userDetails.enterpriseId+'/events')
                             .then(function(response) {
                             	console.log('executed successfully');
                             	

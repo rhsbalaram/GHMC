@@ -54,6 +54,7 @@ console.log('Failure in events call');
                     });
 $scope.selectedValue=null;
  $scope.setSelected = function(idSelectedVote) {
+ 	
        $scope.selectedValue = idSelectedVote;
        console.log(idSelectedVote);
     }

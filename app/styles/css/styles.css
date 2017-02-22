@@ -19,7 +19,7 @@ body{
 	padding-top: 10px;
 }
 .box-blocks{
-	    min-height: 250px;
+	    min-height: 350px;
 
     /* width: 450px; */
     border: 1px solid;
@@ -37,7 +37,7 @@ body{
 }
 
 .header-user-dropdown .header-limiter {
-	max-width: 1300px;
+	
 	text-align: center;
 	margin: 0 auto;
 }
