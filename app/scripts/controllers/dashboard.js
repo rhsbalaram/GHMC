@@ -8,35 +8,25 @@
  * Controller of the ghmcApp
  */
 angular.module('ghmcApp')
-  .controller('dashboardCtrl', function (securityModel,$scope) {
+  .controller('dashboardCtrl', function (SecureStorage,securityModel,$scope,$q,$rootScope) {
   	///////maps coding
-  	 var myLatlng = new google.maps.LatLng(51.508742,-0.120850);
+    var markersMap=[];
+
+  	
       var mapOptions = {
-      	center:myLatlng,
-              zoom:15,
+      	//center:myLatlng,
+              zoom:10,
                
                mapTypeId:google.maps.MapTypeId.ROADMAP
             };
              var markerBounds = new google.maps.LatLngBounds();
-            var infoWindow = new google.maps.InfoWindow({
-            	   content: "<b>Address:</b><br>Bapu Nagar,<br>Sr.nagar,<br>Hyd-500038.",
-            	   //title:"Address:"
-            });
+            var infoWindow = new google.maps.InfoWindow();
            
-            var marker = new google.maps.Marker({
-                  position: myLatlng,
-                    title: "Address:"
-
-                 
-                   });
-
+            
 				
             var map = new google.maps.Map(document.getElementById("map"),mapOptions);
-            marker.setMap(map);
-             marker.addListener('click', function() {
-          infoWindow.open(map, marker);
-        });
-               // markerBounds.extend(myLatlng);
+            
+                           // markerBounds.extend(myLatlng);
               //  map.fitBounds(markerBounds);
          /////maps coding
 /////////table coding
@@ -47,16 +37,134 @@ angular.module('ghmcApp')
                            
 console.log('Successfull of events call');
                          $scope.events=response||response.data; 
+                         //console.log('------'+JSON.stringify(markersMap));
+
+                         drawMarker();
+                        // console.log('------'+JSON.stringify(markersMap));
+                         showOnMap();
+                         if(!$scope.selectedValue){
+
+                         var firstEvent=$scope.events[0];
+             $scope.selectedValue=  firstEvent.id;
+           }
+           getDocuments($scope.selectedValue);
+           $scope.setSelected($scope.selectedValue);
+
+
                         }).catch(function(err) {
 console.log('Failure in events call');
                        
 
                     });
-$scope.selectedValue=null;
- $scope.setSelected = function(idSelectedVote) {
+
+      function getDocuments(eventId) {
+
+    securityModel.getDocuments(eventId).then(function(response) {
+        $scope.imagesDoc = [];
+        for (var i = 0; i < response.length; i++) {
+          var result=response[i];
+            var imageDoc = {};
+            var accessToken = SecureStorage.get('access_token');
+            imageDoc.url = $rootScope.BaseUrl + '/documents/' + result.id + '/download?access_token=' + accessToken;
+            $scope.imagesDoc.push(imageDoc);
+
+        }
+    }).catch(function(err) {
+        console.log('Failure in getDocuments call');
+
+
+    });
+
+
+}
+
+
+
+
+
+
+
+   $scope.selectedValue=null;
+    $scope.setSelected = function(idSelectedVote) {
+      for(var i=0;i<markersMap.length;i++)
+      {
+        var KV=markersMap[i];
+        if(KV.id==idSelectedVote){
+           KV.markerObj.set('animation', google.maps.Animation.BOUNCE);
+    
+        }
+        else{
+          KV.markerObj.set('animation', false);
+        }
+      }
+
  	
        $scope.selectedValue = idSelectedVote;
+       getDocuments(idSelectedVote);
        console.log(idSelectedVote);
+    }
+
+    function drawMarker(){
+       var eventsinMap = $scope.events;
+      for(var i=0;i<eventsinMap.length;i++){
+              //console.log(key, yourobject[key]);
+   var eventMap=eventsinMap[i];
+   
+   if(eventMap.extras){
+    console.log(JSON.stringify(eventMap));
+      if(eventMap.extras.longitude){
+        var KV={};
+        KV.id=eventMap.id;
+        var latlng = new google.maps.LatLng(eventMap.extras.latitude,eventMap.extras.longitude);
+        KV.LatLang=latlng;
+         var newmarker = new google.maps.Marker({
+                  position: latlng,
+                    title: "Address:"
+               
+                   });
+         newmarker.set('Info',eventMap.name);
+         
+         
+         KV.markerObj=newmarker;
+         markersMap.push(KV);
+
+      }
+      else{
+        console.log('inner inner if'+i);
+      }
+    }else{
+      console.log('in inner else'+i);
+    }
+
+
+      }
+
+    }
+
+    function showOnMap(){
+      for(var i=0;i<markersMap.length;i++)
+      {
+        
+          var KV=markersMap[i];
+
+      var newmarker= KV.markerObj;
+
+       markerBounds.extend(KV.LatLang);
+       map.fitBounds(markerBounds);
+      newmarker.setMap(map);
+       google.maps.event.addListener(newmarker, 'click', function () {
+         var message=this.get("Info");       
+              
+              
+               infoWindow.setContent(message);
+         
+         infoWindow.open(map, this);
+           
+       });
+      
+    }
+
+
     }
 
   

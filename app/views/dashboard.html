@@ -136,7 +136,7 @@
     </thead>
     
     <tbody>
-      <tr ng-click="setSelected(event.name)" class="linkStyle" ng-class="{selected : event.name === selectedValue}" ng-repeat="event in events | orderBy:sortType:sortReverse | filter:searchFish">
+      <tr ng-click="setSelected(event.id)" class="linkStyle" ng-class="{selected : event.id === selectedValue}" ng-repeat="event in events | orderBy:sortType:sortReverse | filter:searchFish">
         <td>{{ event.created }}</td>
         <td>{{ event.locationId }}</td>
         <td>{{ event.name }}</td>
@@ -246,34 +246,10 @@
       <div class="row">
       <div class="col-md-12 box-blocks" id="images">
       <div class="row">
-      <div class="col-md-6">
-      	<img src="https://www.w3schools.com/w3images/fjords.jpg" alt="Nature" style="width:100%;margin:5px">
+      <div class="col-md-12" ng-repeat="imageDoc in imagesDoc">
+      	<img style="max-height:350px;width:100%" ng-src={{imageDoc.url}} alt="Nature" style="width:100%;margin:5px">
       </div>
-      <div class="col-md-6">
-      	<img src="https://www.w3schools.com/w3images/nature.jpg" alt="Nature" style="width:100%;margin:5px">
-      </div>
-      <div class="col-md-6">
-      	<img src="https://www.w3schools.com/w3images/lights.jpg" alt="Nature" style="width:100%;margin:5px">
-      </div>
-      <div class="col-md-6">
-      	<img src="https://www.w3schools.com/w3images/fjords.jpg" alt="Nature" style="width:100%;margin:5px">
-      </div>
-      <div class="col-md-6">
-      	<img src="https://www.w3schools.com/w3images/nature.jpg" alt="Nature" style="width:100%;margin:5px">
-      </div>
-      <div class="col-md-6">
-      	<img src="https://www.w3schools.com/w3images/lights.jpg" alt="Nature" style="width:100%;margin:5px">
-      </div>
-      <div class="col-md-6">
-      	<img src="https://www.w3schools.com/w3images/fjords.jpg" alt="Nature" style="width:100%;margin:5px">
-      </div>
-      <div class="col-md-6">
-      	<img src="https://www.w3schools.com/w3images/nature.jpg" alt="Nature" style="width:100%;margin:5px">
-      </div>
-      <div class="col-md-6">
-      	<img src="https://www.w3schools.com/w3images/lights.jpg" alt="Nature" style="width:100%;margin:5px">
-      </div>
-      </div>
+     </div>
     </div>
 
 

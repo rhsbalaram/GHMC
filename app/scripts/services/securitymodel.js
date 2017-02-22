@@ -241,6 +241,24 @@ console.log('enterprises/'+userDetails.enterpriseId+'/events');
 
                         return deferred.promise;	
                 };
+
+                ////////////
+                 model.getDocuments=function(eventId){
+                var deferred = $q.defer(),
+                       events=Restangular.all('events'),
+                        userDetails = JSON.parse(model.getLoggedInUserDetails());
+console.log('events/'+eventId+'/documents');
+                        events.get(eventId+'/documents')
+                            .then(function(response) {
+                                console.log('executed successfully documents');
+                                
+                                deferred.resolve(response);
+                            }).catch(function() {
+                                deferred.reject(response);
+                            });
+
+                        return deferred.promise;    
+                };
  }]);
                 
 
