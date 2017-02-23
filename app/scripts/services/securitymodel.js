@@ -138,7 +138,7 @@ angular.module('ghmcApp')
 
                             data = response.data || response;
 
-                            secureStorage.set('access_token', 'BBZNTNc3qmhBcMu0KmCNj6hn962L0Tn3pIUoRnaWTz4A2yABoPk8nkKZBXmpteNs');//data.id
+                            secureStorage.set('access_token', 'kfPSGd4I2ARubTZVhw7lbG1MYdZGlMWtsVt3YJmIFvOHQamRQ7ZNA5GR5EGR6vue');//data.id
 
                             userId = data.userId; // Here we got  device and token and subscription and extraObject.
                             userId='58a6da1d05ea2b66a6cb800d'
@@ -259,6 +259,29 @@ console.log('events/'+eventId+'/documents');
 
                         return deferred.promise;    
                 };
+                /////////
+                 model.getVolunteers=function(joined_members){
+                var deferred = $q.defer();
+              
+                   var  events=Restangular.all('products');
+                       // userDetails = JSON.parse(model.getLoggedInUserDetails());
+
+                  console.log('products'+$rootScope.productId+'/users/'+joined_members);
+                        events.get($rootScope.productId+'/users/'+joined_members)
+                            .then(function(response) {
+                               
+                                
+                               deferred.resolve(response);
+                            }).catch(function() {
+                                deferred.reject(response);
+                            });
+                
+                
+                     
+
+                        return deferred.promise;    
+                };
+                /////////
  }]);
                 
 

@@ -256,7 +256,31 @@
   </div>
   <div class="row">
    <div class="col-md-12 box-blocks">
-      	<b>volenter View Here</b>
+      	<div>
+  <h2>Volunteers</h2>
+   <div>         
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>In</th>
+        <th>Out</th>
+        <th>Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="user in Users">
+        <td>{{user.name}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.in}}</td>
+        <td>{{user.out}}</td>
+        <td>{{user.points}}</td>
+      </tr>
+      
+    </tbody>
+  </table>
+</div>
     </div>
    </div>
 

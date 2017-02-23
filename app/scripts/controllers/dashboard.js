@@ -26,17 +26,20 @@ angular.module('ghmcApp')
 				
             var map = new google.maps.Map(document.getElementById("map"),mapOptions);
             
-                           // markerBounds.extend(myLatlng);
+                            markerBounds.extend(new google.maps.LatLng(17.387140,78.491684));
               //  map.fitBounds(markerBounds);
          /////maps coding
 /////////table coding
   $scope.sortType     = 'created'; // set the default sort type
   $scope.sortReverse  = false;  // set the default sort order
-  $scope.searchFish   = '';     // set the default search/filter term
+  $scope.searchFish   = ''; 
+  $scope.members   = null;  
+  $scope.Users=[];  // set the default search/filter term
   securityModel.getEvents().then(function(response) {
                            
 console.log('Successfull of events call');
                          $scope.events=response||response.data; 
+
                          //console.log('------'+JSON.stringify(markersMap));
 
                          drawMarker();
@@ -45,6 +48,7 @@ console.log('Successfull of events call');
                          if(!$scope.selectedValue){
 
                          var firstEvent=$scope.events[0];
+                         // $scope.members =$scope.events[0].extras.joined_members;
              $scope.selectedValue=  firstEvent.id;
            }
            getDocuments($scope.selectedValue);
@@ -78,6 +82,41 @@ console.log('Failure in events call');
 
 }
 
+//////
+ function getVolunteers(joined_members) {
+  var listOfjoined=[];
+  if(joined_members){
+    listOfjoined=joined_members.split(',');
+              }
+              var UsersList=[];
+
+                for(var i=0;i<listOfjoined.length;i++){
+
+    securityModel.getVolunteers(listOfjoined[i]).then(function(response) {
+
+       var user = response.data || response;
+                                var newUser={};
+                               newUser.name= user.firstName;
+                               newUser.email=user.email;
+                               newUser.in="10 am";
+                               newUser.out="5 pm";
+                               newUser.points="20";
+                                UsersList.push(newUser);
+       
+        console.log(JSON.stringify(response));
+    }).catch(function(err) {
+        console.log('Failure in getVolunteers call');
+
+
+    });
+  }
+   $scope.Users=UsersList;
+
+
+}
+//////
+
+
 
 
 
@@ -102,6 +141,17 @@ console.log('Failure in events call');
        $scope.selectedValue = idSelectedVote;
        getDocuments(idSelectedVote);
        console.log(idSelectedVote);
+       var Events=$scope.events;
+       for(var i=0;i<Events.length;i++){
+        if(Events[i].id==idSelectedVote){
+          Events[i].extras.joined_members
+
+         getVolunteers(Events[i].extras.joined_members);
+        }
+
+
+       }
+
     }
 
     function drawMarker(){
