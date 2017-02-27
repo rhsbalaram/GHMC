@@ -8,20 +8,8 @@
  * Controller of the ghmcApp
  */
 angular.module('ghmcApp')
- /*.directive('hcChart', function () {
-                return {
-                    restrict: 'E',
-                    template: '<div></div>',
-                    scope: {
-                        options: '='
-                    },
-                    link: function (scope, element) {
-                        Highcharts.chart(element[0], scope.options);
-                    }
-                };
-            })
- */           // Directive for pie charts, pass in title and data only    
-           /* .directive('hcPieChart', function () {
+           // Directive for pie charts, pass in title and data only    
+            .directive('hcChart', function () {
                 return {
                     restrict: 'E',
                     template: '<div></div>',
@@ -32,69 +20,159 @@ angular.module('ghmcApp')
                     link: function (scope, element) {
                         Highcharts.chart(element[0], {
                             chart: {
-                                type: 'column',
+                                type: 'column'
                             },
                             title: {
                                 text: scope.title
                             },
-                            plotOptions: {
-                                pie: {
-                                    allowPointSelect: true,
-                                    cursor: 'pointer',
-                                    dataLabels: {
-                                        enabled: true,
-                                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-                                    }
-                                
-                            },
+                            
+                           xAxis: {
+                            title: {
+                    text: '<b>Locations</b>',
+                },
+
+        categories: [
+            'kondapur',
+            'Madhapur',
+            'JNTU',
+            'LB Nagar',
+            'SR Nagar',
+              ],
+               lineWidth: 0.8,
+              lineColor: 'black' , 
+        crosshair: true
+    },
+   yAxis: {
+                title: {
+                    text: '<b>Events</b>',
+                },
+                
+            lineWidth: 1,
+            lineColor: 'black' ,
+            
+            },
+            
+            tooltip: {
+              
+              pointFormat: '<b>{point.y}</b>'
+            },
+            
+    plotOptions: {
+              
+              series: {
+                    borderWidth: 2,
+                    borderColor: 'grey'
+                },
+              
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 2
+                }
+            },
                             series: [{
+                              showInLegend: false,
+              color: 'rgb(180,214,55)',
+              dataLabels: {
+                       enabled: true,
+                  },
                                 data: scope.data
                             }]
                         });
                     }
                 };
             })
-*/  .controller('dashboardCtrl', function (SecureStorage,securityModel,$scope,$q,$rootScope) {
-
-  $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-  $scope.series = ['Series A', 'Series B'];
-
-  $scope.data = [
-    [65, 59, 80, 81, 56, 55, 40],
-    [28, 48, 40, 19, 86, 27, 90]
-  ];
-    /* $scope.chartOptions = {
-                    title: {
-                        text: 'Temperature data'
-                    },
-                    xAxis: {
-                        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-                            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-                    },
-
-                    series: [{
-                        data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-                    }]
-                };
-*/
+  .controller('dashboardCtrl', function (SecureStorage,securityModel,$scope,$q,$rootScope) {
+  
                 // Sample data for pie chart
-   /*             $scope.pieData = [{
-        name: 'Tokyo',
-        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+                $scope.pieData = [{
+                        y: 20
+                    }, {
+                        y: 30
+                    }, {
+                        y: 50
+                    }, {
+                        y: 30
+                    }, {
+                        y: 20
+                    }  ]
+
+Highcharts.chart('container', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Events Location Wise & Status Wise Summary'
+    },
+    /*subtitle: {
+        text: 'Source: WorldClimate.com'
+    },*/
+    xAxis: {
+
+        categories: [
+            'Kondapur',
+            'Madhapur',
+            'LB Nagar',
+            'SR Nagar',
+            'JNTU'
+        ],
+         lineWidth: 0.8,
+              lineColor: 'black' , 
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: '<b>Events</b>',
+        }
+         
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y} </b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        series: {
+                    borderWidth: 1,
+                    borderColor: 'grey'
+                },
+              
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 2
+                }
+    },
+    series: [{
+        name: 'Pending',
+         dataLabels: {
+                       enabled: true,
+                  },
+              
+        data: [8,10,3,4,5]
+
+    },  {
+        name: 'Rejected',
+         dataLabels: {
+                       enabled: true,
+                  },
+              
+        data: [2,6,4,9,1]
 
     }, {
-        name: 'New York',
-        data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
+        name: 'Approved',
+         dataLabels: {
+                       enabled: true,
+                  },
+              
+        data: [4,5,8,3,7]
 
-    }, {
-        name: 'London',
-        data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
+    }]
+});
 
-    }, {
-        name: 'Berlin',
-        data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
 
-    }]*/
   	///////maps coding
     var markersMap=[];
 
