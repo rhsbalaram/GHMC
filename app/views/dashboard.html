@@ -35,30 +35,40 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Event Name</h4>
+                <h4 class="modal-title">Modal</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <label class="control-label col-sm-4" for="sel1">Change Status:</label>
-                        <div class="col-sm-8">
-                        <select class="form-control" id="sel1">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
+                        <label class="control-label col-sm-2" for="name">Name:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="event.name" placeholder="Enter Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="members">Members Required:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="event.extras.members_required" placeholder="Enter number">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="date">Date:</label>
+                        <div class="col-sm-10">
+                            <input type="date" class="form-control" ng-model="event.start"  placeholder="Enter Date">
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <label class="control-label col-sm-2" for="status">Change Status:</label>
+                        <div class="col-sm-10">
+                        <select class="form-control" id="status" ng-model="event.status">
+                            <option value="Approved">Approved</option>
+                            <option value="Rejected">Rejected</option>
                         </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-2" for="pwd">Password:</label>
-                        <div class="col-sm-10">
-                            <input type="password" class="form-control" id="pwd" placeholder="Enter password">
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-submit">Submit</button>
+                            <button type="submit" ng-click="updateEvent(event)" class="btn btn-submit">Submit</button>
                         </div>
                     </div>
                 </form>
@@ -71,17 +81,72 @@
 <!-- end Modal -->
 <div class="row">
   <div class="col-md-8">
+  <h4><b>Events Summary</b></h4>
   <div class="row">
    <div class="col-md-12" >
-    <div class="box-blocks" id="map">
+  <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="fa fa-envelope-o"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Upcoming</span>
+              <span class="info-box-number">10</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Approved</span>
+              <span class="info-box-number">5</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Rejected</span>
+              <span class="info-box-number">20</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Pending</span>
+              <span class="info-box-number">20</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+      </div>
+       <!--  <div class="box-blocks" id="map">
       	<b>Map View Here</b>
-    </div>
+    </div> -->
    </div>
   </div>
   <div class="row">
   <div class="col-md-12">
   	<div  kt-sleek-scrollBar is-bar-shown="barShown">
-    <form>
+    <!-- <form>
     <div class="form-group">
       <div class="input-group">
         <div class="input-group-addon"><i class="fa fa-search"></i></div>
@@ -89,37 +154,94 @@
       </div>      
     </div>
   </form>
-  
+   
   <table class="table table-hover table-bordered">
     
     <thead>
       <tr>
         <td>
           <a href="" ng-click="sortType = 'created'; sortReverse = !sortReverse">
-            DATE / TIME
+            NAME
             <span ng-show="sortType == 'created' && !sortReverse" class="fa fa-caret-down"></span>
             <span ng-show="sortType == 'created' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
         <td>
-          <a href="" ng-click="sortType = 'locationId'; sortReverse = !sortReverse">
-          LOCATION 
-            <span ng-show="sortType == 'locationId' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'locationId' && sortReverse" class="fa fa-caret-up"></span>
-          </a>
-        </td>
-        <td>
           <a href="" ng-click="sortType = 'name'; sortReverse = !sortReverse">
-          NAME 
+          DATE/TIME 
             <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
             <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
         <td>
-          <a href="" ng-click="sortType = 'event'; sortReverse = !sortReverse">
-          ISSUE 
-            <span ng-show="sortType == 'event' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'event' && sortReverse" class="fa fa-caret-up"></span>
+          <a href="" ng-click="sortType = 'status'; sortReverse = !sortReverse">
+          ISSUE DESCRIPTION 
+            <span ng-show="sortType == 'status' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'status' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+
+        <td>
+          <a href="" ng-click="sortType = 'status'; sortReverse = !sortReverse">
+           LOCATION 
+            <span ng-show="sortType == 'status' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'status' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+         <td>
+          <a href="" ng-click="sortType = 'status'; sortReverse = !sortReverse">
+          STATUS 
+            <span ng-show="sortType == 'status' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'status' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+        <td>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-click="setSelected(event.id)" class="linkStyle" ng-class="{selected : event.id === selectedValue}" ng-repeat="event in events | orderBy:sortType:sortReverse | filter:searchFish">
+        <td>{{ event.name }}</td>
+        <td>{{event.created | date:'yyyy-MM-dd'}} </td>
+        <td>{{ event.extras.grievance_description }}</td>
+        <td>{{ event.extras.grievance_location }}</td>
+        <td>{{ event.status }}</td>
+       <td> <button data-toggle="modal" data-target="#myModal" ng-click="selectedEvent(event)" class="btn mini blue-stripe">Edit</button></td>
+      </tr>
+    </tbody>
+    
+  </table>
+  -->
+  <h4><b>Pending Events for Approval</b></h4>
+  <table class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <td>
+          <a href="" ng-click="sortType = 'created'; sortReverse = !sortReverse">
+            NAME
+            <span ng-show="sortType == 'created' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'created' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+         <td>
+          <a href="" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+          DATE/TIME 
+            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+        <td>
+          <a href="" ng-click="sortType = 'status'; sortReverse = !sortReverse">
+          ISSUE DESCRIPTION 
+            <span ng-show="sortType == 'status' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'status' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+        <td>
+          <a href="" ng-click="sortType = 'status'; sortReverse = !sortReverse">
+           LOCATION 
+            <span ng-show="sortType == 'status' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'status' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
         <td>
@@ -130,129 +252,109 @@
           </a>
         </td>
         <td>
-        	
         </td>
       </tr>
     </thead>
-    
     <tbody>
       <tr ng-click="setSelected(event.id)" class="linkStyle" ng-class="{selected : event.id === selectedValue}" ng-repeat="event in events | orderBy:sortType:sortReverse | filter:searchFish">
-        <td>{{ event.created }}</td>
-        <td>{{ event.locationId }}</td>
         <td>{{ event.name }}</td>
-        <td>{{ event.event }}</td>
+        <td>{{event.created | date:'yyyy-MM-dd'}} </td>
+        <td>{{ event.extras.grievance_description }}</td>
+        <td>{{ event.extras.grievance_location }}</td>
         <td>{{ event.status }}</td>
-       <td> <button data-toggle="modal" data-target="#myModal" class="btn mini blue-stripe">Edit</button></td>
+       <td> <button data-toggle="modal" data-target="#myModal" ng-click="selectedEvent(event)" class="btn mini blue-stripe">Edit</button></td>
       </tr>
     </tbody>
     
   </table>
-  	<!-- <table class="table table-striped">
-    <thead>
+  
+  <!-- <div class="container"> -->
+  <!-- <h2>Accordion Example</h2> -->
+<!-- <table class="table table-hover table-bordered col-md-4">
       <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
+        <td>
+            LOCATIONS
+        </td>
       </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
-       <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
-       <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
-       <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
-       <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
-    </tbody>
-  </table> -->
+    <tr ng-repeat="event in events ">
+        
+        <td> <a ng-click="locationBasedEvents(event)" href=""> {{ event.extras.grievance_location }} </a> </td>
+        
+  </tr>
+  
+  </table>
+ -->  <!-- <p><strong>Note:</strong> The <strong>data-parent</strong> attribute</p>
+  <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse1" href="">Collapsible Group 1</a>
+        </h4>
+      </div>
+      <div id="collapse1" class="panel-collapse collapse in">
+        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit</div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse2" href="">Collapsible Group 2</a>
+        </h4>
+      </div>
+      <div id="collapse2" class="panel-collapse collapse">
+        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit</div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse3" href="">Collapsible Group 3</a>
+        </h4>
+      </div>
+      <div id="collapse3" class="panel-collapse collapse">
+        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit</div>
+      </div>
+    </div>
+  </div> 
+ --><!-- </div> -->
+
   </div>
   </div>
+  <div class="row">
+  <!--  <div class="col-md-12" > -->
+   <!-- <div class="row"> -->
+     <!-- <hc-pie-chart title="Events Location Wise Summary" data="pieData">Placeholder for pie chart</hc-pie-chart> -->
+     <canvas id="bar" class="chart chart-bar"
+  chart-data="data" chart-labels="labels"> chart-series="series"
+</canvas>
+    <!-- </div> -->
+   <!-- </div> -->
+  </div>
+<!--    <div class="row">
+   <div class="col-md-12" >
+   <hc-chart options="chartOptions">Placeholder for generic chart</hc-chart>
+   </div>
+  </div> -->
   </div>
   	
   </div>
+
   
   
   <div class="col-md-4">
   	<div class="row">
-      
-      <div class="row">
-      <div class="col-md-12 box-blocks" id="images">
+     <div class="row">
+     <div class="col-md-12 box-blocks" id="map">
+    </div>
+  </div>
+    <div class="row">
+     <div class="col-md-12 box-blocks" id="images">
       <div class="row">
       <div class="col-md-12" ng-repeat="imageDoc in imagesDoc">
       	<img style="max-height:350px;width:100%" ng-src={{imageDoc.url}} alt="Nature" style="width:100%;margin:5px">
       </div>
-     </div>
+      </div>
     </div>
-
-
   </div>
   <div class="row">
    <div class="col-md-12 box-blocks">
@@ -283,10 +385,7 @@
 </div>
     </div>
    </div>
-
   </div>
-
-    
 </div>
 
 </div>

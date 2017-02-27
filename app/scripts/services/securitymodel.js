@@ -138,7 +138,7 @@ angular.module('ghmcApp')
 
                             data = response.data || response;
 
-                            secureStorage.set('access_token', 'kfPSGd4I2ARubTZVhw7lbG1MYdZGlMWtsVt3YJmIFvOHQamRQ7ZNA5GR5EGR6vue');//data.id
+                            secureStorage.set('access_token', 'SDJ1RLg5O9R29w0h7Bj14LxLoAp0fLSf0uZntTXCSZ9bZQDau9ioCDTUWohlRgLe');//data.id
 
                             userId = data.userId; // Here we got  device and token and subscription and extraObject.
                             userId='58a6da1d05ea2b66a6cb800d'
@@ -259,6 +259,35 @@ console.log('events/'+eventId+'/documents');
 
                         return deferred.promise;    
                 };
+		
+		 ////////////
+                 model.postEventDetails=function(event){
+                var deferred = $q.defer();
+
+
+              //  event.created = new Date(event.created);
+              //   var accessToken = SecureStorage.get('access_token');
+
+               //     var url = $rootScope.BaseUrl + '/events/' + event.id + '?access_token=' + accessToken;
+                    var strObj1 = JSON.stringify(event);
+
+                     var  events=Restangular.all('events/'+event.id);
+                       // events=Restangular.one('events/'+event.id),
+                        userDetails = JSON.parse(model.getLoggedInUserDetails());
+console.log('events/'+event.id);
+                        events.customPUT(strObj1)
+                            .then(function(response) {
+                                console.log('executed successfully update event');
+                                console.log('resoponse update'+JSON.stringify(response));
+                                
+                                deferred.resolve(response);
+                            }).catch(function() {
+                                deferred.reject(response);
+                            });
+
+                        return deferred.promise;    
+                };
+
                 /////////
                  model.getVolunteers=function(joined_members){
                 var deferred = $q.defer();

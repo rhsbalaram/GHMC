@@ -19,7 +19,10 @@ angular
     'ngSanitize',
     'ngTouch',
     'ui.router',
-    'restangular'
+    'restangular',
+    'chart.js'
+    /*'ui.directive',*/
+    /*'ui.filters'*/
   ])
   .config(function ($locationProvider,$stateProvider, $urlRouterProvider) {
 $locationProvider.hashPrefix('');

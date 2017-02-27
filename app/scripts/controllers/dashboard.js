@@ -8,7 +8,93 @@
  * Controller of the ghmcApp
  */
 angular.module('ghmcApp')
-  .controller('dashboardCtrl', function (SecureStorage,securityModel,$scope,$q,$rootScope) {
+ /*.directive('hcChart', function () {
+                return {
+                    restrict: 'E',
+                    template: '<div></div>',
+                    scope: {
+                        options: '='
+                    },
+                    link: function (scope, element) {
+                        Highcharts.chart(element[0], scope.options);
+                    }
+                };
+            })
+ */           // Directive for pie charts, pass in title and data only    
+           /* .directive('hcPieChart', function () {
+                return {
+                    restrict: 'E',
+                    template: '<div></div>',
+                    scope: {
+                        title: '@',
+                        data: '='
+                    },
+                    link: function (scope, element) {
+                        Highcharts.chart(element[0], {
+                            chart: {
+                                type: 'column',
+                            },
+                            title: {
+                                text: scope.title
+                            },
+                            plotOptions: {
+                                pie: {
+                                    allowPointSelect: true,
+                                    cursor: 'pointer',
+                                    dataLabels: {
+                                        enabled: true,
+                                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                                    }
+                                
+                            },
+                            series: [{
+                                data: scope.data
+                            }]
+                        });
+                    }
+                };
+            })
+*/  .controller('dashboardCtrl', function (SecureStorage,securityModel,$scope,$q,$rootScope) {
+
+  $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+  $scope.series = ['Series A', 'Series B'];
+
+  $scope.data = [
+    [65, 59, 80, 81, 56, 55, 40],
+    [28, 48, 40, 19, 86, 27, 90]
+  ];
+    /* $scope.chartOptions = {
+                    title: {
+                        text: 'Temperature data'
+                    },
+                    xAxis: {
+                        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                    },
+
+                    series: [{
+                        data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+                    }]
+                };
+*/
+                // Sample data for pie chart
+   /*             $scope.pieData = [{
+        name: 'Tokyo',
+        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+
+    }, {
+        name: 'New York',
+        data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
+
+    }, {
+        name: 'London',
+        data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
+
+    }, {
+        name: 'Berlin',
+        data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
+
+    }]*/
   	///////maps coding
     var markersMap=[];
 
@@ -39,7 +125,19 @@ angular.module('ghmcApp')
                            
 console.log('Successfull of events call');
                          $scope.events=response||response.data; 
+                         /*var Events = $scope.events;
+                         var eventsEnding = [] ;
 
+                         for(i=0;i<Events.length;i++){
+
+                          if(Events[i].status=="Submitted"){
+                            eventsEnding.push(Events[i]);
+                          }
+
+                         }
+
+                         $scope.events = eventsEnding ;
+*/
                          //console.log('------'+JSON.stringify(markersMap));
 
                          drawMarker();
@@ -81,6 +179,86 @@ console.log('Failure in events call');
 
 
 }
+
+$scope.selectedEvent=null;
+    $scope.selectedEvent = function(event) {
+      
+  
+       $scope.event = event;
+
+      // $scope.event.created =Date.parse(event.created);
+
+       $scope.event.start = new Date(event.start);
+       /*getDocuments(idSelectedVote);
+       console.log(idSelectedVote);*/
+    }
+    
+
+    //$scope.selectedEvent=null;
+    $scope.locationBasedEvents = function(event) {
+      
+  
+       var location = event.extras.grievance_location;
+
+       var filteredEvents = [] ;
+
+      
+  }
+
+
+    
+
+    $scope.updateEvent=null;
+    $scope.updateEvent = function(event) {
+      
+  
+       $scope.event = event;
+        //$scope.myModal.dismiss('cancel');
+         $('#myModal').modal('hide');
+
+         securityModel.postEventDetails(event).then(function(response) {
+       
+          var result=response;
+
+          console.log('Successfull in updateEvent call');
+
+          console.log('resoponse update'+JSON.stringify(response));
+
+         securityModel.getEvents().then(function(response) {
+                           
+console.log('Successfull of events call');
+                         $scope.events=response||response.data; 
+                         //console.log('------'+JSON.stringify(markersMap));
+
+                         drawMarker();
+                        // console.log('------'+JSON.stringify(markersMap));
+                         showOnMap();
+                         if(!$scope.selectedValue){
+
+                         var firstEvent=$scope.events[0];
+             $scope.selectedValue=  firstEvent.id;
+           }
+           getDocuments($scope.selectedValue);
+           $scope.setSelected($scope.selectedValue);
+
+
+                        }).catch(function(err) {
+console.log('Failure in events call');
+                       
+
+                    });
+
+    }).catch(function(err) {
+        console.log('Failure in updateEvent call');
+
+
+    });
+
+       //$scope.event.created = new Date(2013, 9, 22);
+       /*getDocuments(idSelectedVote);
+       console.log(idSelectedVote);*/
+    }    
+
 
 //////
  function getVolunteers(joined_members) {
