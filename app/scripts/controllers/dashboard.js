@@ -8,104 +8,134 @@
  * Controller of the ghmcApp
  */
 angular.module('ghmcApp')
-           // Directive for pie charts, pass in title and data only    
-            .directive('hcChart', function () {
-                return {
-                    restrict: 'E',
-                    template: '<div></div>',
-                    scope: {
-                        title: '@',
-                        data: '='
-                    },
-                    link: function (scope, element) {
-                        Highcharts.chart(element[0], {
-                            chart: {
-                                type: 'column'
-                            },
-                            title: {
-                                text: scope.title
-                            },
-                            
-                           xAxis: {
-                            title: {
-                    text: '<b>Locations</b>',
-                },
-
-        categories: [
-            'kondapur',
-            'Madhapur',
-            'JNTU',
-            'LB Nagar',
-            'SR Nagar',
-              ],
-               lineWidth: 0.8,
-              lineColor: 'black' , 
-        crosshair: true
+.factory('Chart', function () {
+    var chartConfig = {
+        chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
     },
-   yAxis: {
-                title: {
-                    text: '<b>Events</b>',
-                },
-                
-            lineWidth: 1,
-            lineColor: 'black' ,
-            
-            },
-            
-            tooltip: {
-              
-              pointFormat: '<b>{point.y}</b>'
-            },
-            
-    plotOptions: {
-              
-              series: {
-                    borderWidth: 2,
-                    borderColor: 'grey'
-                },
-              
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 2
+
+        plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
                 }
-            },
-                            series: [{
-                              showInLegend: false,
-              color: 'rgb(180,214,55)',
-              dataLabels: {
-                       enabled: true,
-                  },
-                                data: scope.data
-                            }]
-                        });
-                    }
-                };
-            })
-  .controller('dashboardCtrl', function (SecureStorage,securityModel,$scope,$q,$rootScope) {
+            }
+        }
+    },
+        series: [{
+            data: [/*{
+                        name: "Environment",
+                        y: 10
+                    }, {
+                        name: "Clean City",
+                        y: 20
+                    }, {
+                        name: "Human Rights",
+                        y: 30
+                    }, {
+                        name: "Politics",
+                        y: 40
+                    }*/]
+               
+        }],
+        
+        title: {
+            text: 'Events Problem Wise'
+        },
+
+        loading: false
+        
+    }
+    return chartConfig;
+})
+          
+  .controller('dashboardCtrl', function (SecureStorage,securityModel,$scope,$q,$rootScope,Chart) {
+
+     $scope.chartConfig = Chart;
   
-                // Sample data for pie chart
-                $scope.pieData = [{
-                        y: 20
-                    }, {
-                        y: 30
-                    }, {
-                        y: 50
-                    }, {
-                        y: 30
-                    }, {
-                        y: 20
-                    }  ]
+   /* $scope.update = function () {
+
+                         $scope.chartConfig.series = [{
+                          "data": [envCount, cleanCount, hrCount, polCount]
+                        }];
+        console.log($scope.chartConfig.series);
+        console.log($scope.chartConfig);
+    }
+*/
+
+                         
+securityModel.getEvents().then(function(response) {
+
+                         var envCount=0;
+                         var cleanCount=0;
+                         var hrCount=0;
+                         var polCount=0;
+
+
+                         $scope.events=response||response.data; 
+
+                         var Events = $scope.events;
+                        
+                         for(var i=0;i<Events.length;i++){
+
+                          if(Events[i].extras.grievance_type=="Environment"){
+                            envCount++;
+                          }
+                          else if(Events[i].extras.grievance_type=="Clean City"){
+                            cleanCount++;
+                          }
+                          else if(Events[i].extras.grievance_type=="Human Rights"){
+                            hrCount++;
+                          }
+                          else if(Events[i].extras.grievance_type=="Politics"){
+                            polCount++;
+                          }
+
+                         }
+$scope.chartConfig.series = [{
+
+                    data: [{
+                          "name": "Environment",
+                          "y": envCount
+                        },
+                        {
+                          "name": "Clean City",
+                          "y": cleanCount
+                        },
+                        {
+                          "name": "Human Rights",
+                          "y": hrCount
+                        },
+                        {
+                          "name": "Politics",
+                          "y": polCount
+                        }
+
+                        ]
+                        }];
+
+                       
+                        }).catch(function(err) {
+console.log('Failure in events call');
+                       
+
+                    });
 
 Highcharts.chart('container', {
     chart: {
         type: 'column'
     },
     title: {
-        text: 'Events Location Wise & Status Wise Summary'
+        text: '<b>Events Location Wise & Status Wise Summary</b>'
     },
-    /*subtitle: {
-        text: 'Source: WorldClimate.com'
-    },*/
     xAxis: {
 
         categories: [
@@ -203,19 +233,35 @@ Highcharts.chart('container', {
                            
 console.log('Successfull of events call');
                          $scope.events=response||response.data; 
-                         /*var Events = $scope.events;
-                         var eventsEnding = [] ;
 
-                         for(i=0;i<Events.length;i++){
+                         var Events = $scope.events;
+                         var envCount=0;
+                         var approvedCount=0;
+                         var rejectedCount=0;
+                         var pendingCount=0;
 
-                          if(Events[i].status=="Submitted"){
-                            eventsEnding.push(Events[i]);
+                         for(var i=0;i<Events.length;i++){
+
+                          if(Events[i].status=="Approved"){
+                            approvedCount++;
                           }
-
+                          else if(Events[i].status=="Rejected"){
+                            rejectedCount++;
+                          }
+                          else if(Events[i].status=="Submitted"){
+                            pendingCount++;
+                          }
+                          
                          }
 
-                         $scope.events = eventsEnding ;
-*/
+                         $scope.approved = approvedCount;
+                         $scope.rejected = rejectedCount;
+                         $scope.pending = pendingCount;
+
+
+
+                        // $scope.events = eventsEnding ;
+
                          //console.log('------'+JSON.stringify(markersMap));
 
                          drawMarker();

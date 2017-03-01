@@ -138,7 +138,7 @@ angular.module('ghmcApp')
 
                             data = response.data || response;
 
-                            secureStorage.set('access_token', 'SDJ1RLg5O9R29w0h7Bj14LxLoAp0fLSf0uZntTXCSZ9bZQDau9ioCDTUWohlRgLe');//data.id
+                            secureStorage.set('access_token', '4PKuG7gM3mK85jD91IB7Ic9SWSvWQyKUx0B5CRyllvKBmSThx0MQMESjSMoO6tKF');//data.id
 
                             userId = data.userId; // Here we got  device and token and subscription and extraObject.
                             userId='58a6da1d05ea2b66a6cb800d'

@@ -71,7 +71,20 @@ body{
     overflow: hidden;
     text-overflow: ellipsis;
 }
+fieldset.scheduler-border {
+    border: 1px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+            box-shadow:  0px 0px 0px 0px #000;
+}
 
+legend.scheduler-border {
+     width:inherit; /* Or auto */
+    padding:0 10px; /* To give a bit of padding on the left and right */
+    border-bottom:none;
+
+}
 
 .selected{
 	background: #deeade;
@@ -87,8 +100,9 @@ body{
 	    min-height: 350px;
 
     /* width: 450px; */
-    border: 1px solid;
+    border: 1px solid #c1c1c1;
     margin-bottom: 10px;
+    border-radius:5px;
    
 }
 
