@@ -20,8 +20,8 @@ angular
     'ngTouch',
     'ui.router',
     'restangular',
-    'chart.js',
-    'highcharts-ng'
+    'highcharts-ng',
+    'ui.unique'
 
     /*'ui.directive',*/
     /*'ui.filters'*/

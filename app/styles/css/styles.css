@@ -249,6 +249,18 @@ legend.scheduler-border {
 	
 }
 
+.info-box:hover{
+	opacity: 0.4;
+	cursor: pointer;
+	cursor: hand;
+}
+.eventFilter{
+    outline: -webkit-focus-ring-color auto 5px;
+    outline-color: -webkit-focus-ring-color;
+    outline-style: auto;
+    outline-width: 5px;
+}
+
 
 @media all and (max-width: 800px) {
 

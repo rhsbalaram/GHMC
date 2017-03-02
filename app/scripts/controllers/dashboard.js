@@ -57,24 +57,43 @@ angular.module('ghmcApp')
     return chartConfig;
 })
           
-  .controller('dashboardCtrl', function (SecureStorage,securityModel,$scope,$q,$rootScope,Chart) {
+  .controller('dashboardCtrl', function (SecureStorage,securityModel,$scope,$q,$rootScope,Chart,$filter) {
 
      $scope.chartConfig = Chart;
   
-   /* $scope.update = function () {
+              
+  	///////maps coding
+    var markersMap=[];
 
-                         $scope.chartConfig.series = [{
-                          "data": [envCount, cleanCount, hrCount, polCount]
-                        }];
-        console.log($scope.chartConfig.series);
-        console.log($scope.chartConfig);
-    }
-*/
-
-                         
-securityModel.getEvents().then(function(response) {
-
-                         var envCount=0;
+  	
+      var mapOptions = {
+      	//center:myLatlng,
+              zoom:10,
+               
+               mapTypeId:google.maps.MapTypeId.ROADMAP
+            };
+             var markerBounds = new google.maps.LatLngBounds();
+            var infoWindow = new google.maps.InfoWindow();
+           
+            
+				
+            var map = new google.maps.Map(document.getElementById("map"),mapOptions);
+            
+                            markerBounds.extend(new google.maps.LatLng(17.387140,78.491684));
+              //  map.fitBounds(markerBounds);
+         /////maps coding
+/////////table coding
+  //$scope.sortType     = 'created'; // set the default sort type
+  //$scope.sortReverse  = true;  // set the default sort order
+  $scope.searchFish   = ''; 
+  $scope.members   = null;  
+  $scope.Users=[];  // set the default search/filter term
+  securityModel.getEvents().then(function(response) {
+                           
+console.log('Successfull of events call');
+                         $scope.events=response||response.data; 
+                        //pie chart logic
+			                         var envCount=0;
                          var cleanCount=0;
                          var hrCount=0;
                          var polCount=0;
@@ -121,159 +140,21 @@ $scope.chartConfig.series = [{
 
                         ]
                         }];
-
-                       
-                        }).catch(function(err) {
-console.log('Failure in events call');
-                       
-
-                    });
-
-Highcharts.chart('container', {
-    chart: {
-        type: 'column'
-    },
-    title: {
-        text: '<b>Events Location Wise & Status Wise Summary</b>'
-    },
-    xAxis: {
-
-        categories: [
-            'Kondapur',
-            'Madhapur',
-            'LB Nagar',
-            'SR Nagar',
-            'JNTU'
-        ],
-         lineWidth: 0.8,
-              lineColor: 'black' , 
-        crosshair: true
-    },
-    yAxis: {
-        min: 0,
-        title: {
-            text: '<b>Events</b>',
-        }
-         
-    },
-    tooltip: {
-        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y} </b></td></tr>',
-        footerFormat: '</table>',
-        shared: true,
-        useHTML: true
-    },
-    plotOptions: {
-        series: {
-                    borderWidth: 1,
-                    borderColor: 'grey'
-                },
-              
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 2
-                }
-    },
-    series: [{
-        name: 'Pending',
-         dataLabels: {
-                       enabled: true,
-                  },
-              
-        data: [8,10,3,4,5]
-
-    },  {
-        name: 'Rejected',
-         dataLabels: {
-                       enabled: true,
-                  },
-              
-        data: [2,6,4,9,1]
-
-    }, {
-        name: 'Approved',
-         dataLabels: {
-                       enabled: true,
-                  },
-              
-        data: [4,5,8,3,7]
-
-    }]
-});
-
-
-  	///////maps coding
-    var markersMap=[];
-
-  	
-      var mapOptions = {
-      	//center:myLatlng,
-              zoom:10,
-               
-               mapTypeId:google.maps.MapTypeId.ROADMAP
-            };
-             var markerBounds = new google.maps.LatLngBounds();
-            var infoWindow = new google.maps.InfoWindow();
-           
-            
-				
-            var map = new google.maps.Map(document.getElementById("map"),mapOptions);
-            
-                            markerBounds.extend(new google.maps.LatLng(17.387140,78.491684));
-              //  map.fitBounds(markerBounds);
-         /////maps coding
-/////////table coding
-  $scope.sortType     = 'created'; // set the default sort type
-  $scope.sortReverse  = false;  // set the default sort order
-  $scope.searchFish   = ''; 
-  $scope.members   = null;  
-  $scope.Users=[];  // set the default search/filter term
-  securityModel.getEvents().then(function(response) {
-                           
-console.log('Successfull of events call');
-                         $scope.events=response||response.data; 
-
-                         var Events = $scope.events;
-                         var envCount=0;
-                         var approvedCount=0;
-                         var rejectedCount=0;
-                         var pendingCount=0;
-
-                         for(var i=0;i<Events.length;i++){
-
-                          if(Events[i].status=="Approved"){
-                            approvedCount++;
-                          }
-                          else if(Events[i].status=="Rejected"){
-                            rejectedCount++;
-                          }
-                          else if(Events[i].status=="Submitted"){
-                            pendingCount++;
-                          }
-                          
-                         }
-
-                         $scope.approved = approvedCount;
-                         $scope.rejected = rejectedCount;
-                         $scope.pending = pendingCount;
-
-
-
-                        // $scope.events = eventsEnding ;
-
+			//end of pie chart
                          //console.log('------'+JSON.stringify(markersMap));
 
                          drawMarker();
                         // console.log('------'+JSON.stringify(markersMap));
                          showOnMap();
+                         $scope.getEventFilter('Submitted');
                          if(!$scope.selectedValue){
 
-                         var firstEvent=$scope.events[0];
+                         var firstEvent=$scope.filteredEvents[0];
                          // $scope.members =$scope.events[0].extras.joined_members;
              $scope.selectedValue=  firstEvent.id;
            }
-           getDocuments($scope.selectedValue);
+           getEventFilterCount();
+           //getDocuments($scope.selectedValue);
            $scope.setSelected($scope.selectedValue);
 
 
@@ -357,12 +238,13 @@ console.log('Successfull of events call');
                          drawMarker();
                         // console.log('------'+JSON.stringify(markersMap));
                          showOnMap();
-                         if(!$scope.selectedValue){
-
-                         var firstEvent=$scope.events[0];
+                         
+           //getDocuments($scope.selectedValue);
+           $scope.getEventFilter($scope.selectedFilterStatus);
+           getEventFilterCount();
+            var firstEvent=$scope.filteredEvents[0];
+                         // $scope.members =$scope.events[0].extras.joined_members;
              $scope.selectedValue=  firstEvent.id;
-           }
-           getDocuments($scope.selectedValue);
            $scope.setSelected($scope.selectedValue);
 
 
@@ -521,7 +403,134 @@ console.log('Failure in events call');
 
   
   // table coding 
- 
+ //filters
+ $scope.Upcoming=0;
+ $scope.Approved=0;
+ $scope.Rejected=0;
+ $scope.Submitted=0;
+ $scope.getEventFilter=function(filterEvent){
+  $scope.searchFish='';
+$scope.EventText=filterEvent+' Events'
+  $scope.selectedFilterStatus=filterEvent;
+  $scope.sortType     = null; // set the default sort type
+  $scope.sortReverse  = null;  // set the default sort order
+   $scope.filteredEvents = $filter('orderBy')($scope.events, function(event){
+            console.log(new Date(event.created));
+                return new Date(event.created);
+            },true);
+  if(filterEvent=='Upcoming'){
+    
+     $scope.filteredEvents = $filter('filter')($scope.filteredEvents, function(event){
+            
+                return new Date(event.start)>new Date();
+            });
+      
+  }
+  else{
+     $scope.filteredEvents = $filter('filter')($scope.filteredEvents, function(event){
+            
+                return event.status==filterEvent;
+            });
+  }
+            var firstEvent=$scope.filteredEvents[0];
+                         // $scope.members =$scope.events[0].extras.joined_members;
+             $scope.selectedValue=  firstEvent.id;
+             $scope.setSelected($scope.selectedValue);
+
+ };
+
+  function getEventFilterCount(){
+     $scope.UpcomingEvents = $filter('filter')($scope.events, function(event){
+            
+                return new Date(event.start)>new Date();
+            });
+     $scope.ApprovedEvents = $filter('filter')($scope.events, function(event){
+            
+                return event.status=='Approved';
+            });
+     $scope.RejectedEvents = $filter('filter')($scope.events, function(event){
+            
+                return event.status=='Rejected';
+            });
+     $scope.SubmittedEvents = $filter('filter')($scope.events, function(event){
+            
+                return event.status=='Submitted';
+            });
+
+
+     $scope.Upcoming=$scope.UpcomingEvents.length;
+     $scope.Approved=$scope.ApprovedEvents.length;
+     $scope.Rejected=$scope.RejectedEvents.length;
+      $scope.Submitted=$scope.SubmittedEvents.length;
+
+  };
+  ///////////for charts data
+        // Sample options for first chart
+                $scope.chartOptions =  {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Monthly Average Rainfall'
+    },
+    subtitle: {
+        text: 'Source: WorldClimate.com'
+    },
+    xAxis: {
+        categories: [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec'
+        ],
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Rainfall (mm)'
+        }
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: 'Tokyo',
+        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+
+    }, {
+        name: 'New York',
+        data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
+
+    }, {
+        name: 'London',
+        data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
+
+    }, {
+        name: 'Berlin',
+        data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
+
+    }]
+};
 
 
   });

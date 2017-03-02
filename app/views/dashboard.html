@@ -19,7 +19,7 @@
 
 			<ul>
 				<li><a href="#">Settings</a></li>
-				<li><a href="#">Payments</a></li>
+				
 				<li><a href="#" class="highlight">Logout</a></li>
 			</ul>
 		</div>
@@ -82,84 +82,69 @@
 <div class="row">
   <div class="col-md-8">
   <div class="row">
-   <div class="col-md-12" > 
-   <!-- <div class="row"> -->
-    <!--  <hc-chart title="Events Location Wise Summary" data="pieData">Placeholder for pie chart</hc-chart> -->
-     <fieldset class="scheduler-border">
-     <legend class="scheduler-border">Events Location Wise and Status wise Summary</legend>
-      <div id="container" ></div> 
-     <!--  <hc-chart title="Events Location Wise Summary" data="pieData1">Placeholder for pie chart</hc-chart> -->
-     <!-- <highchart type="column" data="arr"
-                       title="Movie Audience Measurement"
-                       subtitle="Source: PirateBay"
-                       y-title="Quantitative (MM)"
-                       y-Field="value"
-                       display-name="name"
-                       legend-formatter="displayFunction"
-                       tooltip-formatter="tootipFunction"
-                       category-field="period">
-            </highchart>
-      --></fieldset>
-    <!-- </div> -->
-    </div>
+   <div class="col-md-12">
+     <hc-chart style="width:64%" options="chartOptions">Placeholder for generic chart</hc-chart>
+   </div>
+    
   </div>
   <fieldset class="scheduler-border">
   <legend class="scheduler-border">Events Summary</legend>
   <div class="row">
    <div class="col-md-12" >
   <div class="row">
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="fa fa-envelope-o"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Upcoming</span>
-              <span class="info-box-number">10</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Approved</span>
-              <span class="info-box-number">{{approved}}</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Rejected</span>
-              <span class="info-box-number">{{rejected}}</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
+         <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box linkStyle" ng-click="getEventFilter('Submitted')"  ng-class="{eventFilter : 'Submitted' === selectedFilterStatus}">
             <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Pending</span>
-              <span class="info-box-number">{{pending}}</span>
+              <span class="info-box-number">{{Submitted}}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
           <!-- /.info-box -->
         </div>
         <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box linkStyle" ng-click="getEventFilter('Upcoming')"  ng-class="{eventFilter : 'upcoming' === selectedFilterStatus}">
+            <span class="info-box-icon bg-aqua"><i class="fa fa-envelope-o"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Upcoming</span>
+              <span class="info-box-number">{{Upcoming}}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box linkStyle" ng-click="getEventFilter('Approved')"  ng-class="{eventFilter : 'Approved' === selectedFilterStatus}">
+            <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Approved</span>
+              <span class="info-box-number">{{Approved}}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box linkStyle" ng-click="getEventFilter('Rejected')"  ng-class="{eventFilter : 'Rejected' === selectedFilterStatus}">
+            <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Rejected</span>
+              <span class="info-box-number">{{Rejected}}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        
       </div>
        <!--  <div class="box-blocks" id="map">
       	<b>Map View Here</b>
@@ -238,6 +223,14 @@
   -->
   <fieldset class="scheduler-border">
   <legend class="scheduler-border">Pending Events for Approval</legend>
+    <h4><b>{{EventText}}</b>
+     <span class="btn-group">
+            
+                        <select class="form-control col-sm-2" ng-model="searchFish" ng-options="filterevent.extras.grievance_location for filterevent in filteredEvents | unique:'extras.grievance_location'">
+                        <option value="" selected>Location</option>
+                          
+                        </select>
+  </span></h4>
   <table class="table table-hover table-bordered">
     <thead>
       <tr>
@@ -281,7 +274,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-click="setSelected(event.id)" class="linkStyle" ng-class="{selected : event.id === selectedValue}" ng-repeat="event in events | orderBy:sortType:sortReverse | filter:searchFish">
+      <tr ng-click="setSelected(event.id)" class="linkStyle" ng-class="{selected : event.id === selectedValue}" ng-repeat="event in filteredEvents | orderBy:sortType:sortReverse | filter:searchFish">
         <td>{{ event.name }}</td>
         <td>{{event.created | date:'yyyy-MM-dd'}} </td>
         <td>{{ event.extras.grievance_description }}</td>

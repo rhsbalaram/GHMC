@@ -14,8 +14,9 @@
     "angular-touch": "^1.4.0",
     "angular-ui-router": "^0.4.2",
     "restangular": "^1.6.1",
-    "angular-chart.js": "^1.1.1",
-    "highcharts": "^5.0.7",
+    "angular-ui": "^0.4.0",
+    "angular-ui-utils": "^3.0.0",
+    "angular-ui-unique": "angular-ui-utils#unique-0.2.3",
     "highcharts-ng": "^1.0.1"
   },
   "devDependencies": {
