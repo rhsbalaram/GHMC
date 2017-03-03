@@ -1,6 +1,7 @@
 body{
 	
 	margin:0px;
+	    background: #edeff0;
 }
 
 .linkStyle{
@@ -107,11 +108,11 @@ legend.scheduler-border {
 }
 
 .header-user-dropdown {
-	background-color:#292c2f;
+	background-color:white;
 	box-shadow:0 1px 1px #ccc;
-	padding: 10px 10px;
-	height: 50px;
-	color: #ffffff;
+	/*padding: 10px 10px;*/
+	height: 60px;
+	color: black;
 	box-sizing: border-box;
 }
 
@@ -125,9 +126,9 @@ legend.scheduler-border {
 
 .header-user-dropdown .header-limiter img{
 	float: left;
-	top:6px;
-	max-width: 28px;
-	left:10px;
+	
+	max-width: 45px;
+	margin:5px;
 }
 
 .header-user-dropdown .header-limiter h1 span {
@@ -137,7 +138,7 @@ legend.scheduler-border {
 /* The header links */
 
 .header-user-dropdown .header-limiter a {
-	color: #ffffff;
+	color: black;
 	text-decoration: none;
 }
 
@@ -182,10 +183,13 @@ legend.scheduler-border {
 .header-user-dropdown .header-limiter .header-user-menu{
 	position: relative;
 	float:right;
-	background-color:#3a3c3e;
+	background-color:white;
 	width:145px;
-	height:40px;
+	height:55px;
 	border-radius:2px;
+	margin: 5px;
+	padding-top: 5px;
+	border-left: 1px solid #ccc;
 }
 
 .header-user-dropdown .header-limiter .header-user-menu h3{
@@ -198,27 +202,27 @@ legend.scheduler-border {
 	content:'';
 	width:0;
 	height:0;
-	top: 18px;
-	left: 15px;
+	top: 25px;
+	left: 20px;
 	position:absolute;
-	border:5px solid transparent;
-	border-top-color:#fff;
+	border:5px solid white;
+	border-top-color:black;
 }
 
 .header-user-dropdown .header-limiter .header-user-menu ul{
 	display: none;
-	font:bold 13px Arial, Helvetica, sans-serif;
-	background-color: inherit;
+	font:bold 15px Arial, Helvetica, sans-serif;
+	background-color: white;
 	list-style: none;
 	z-index: 1;
 	position: absolute;
 	text-align: center;
 	width: 125px;
-	top: 39px;
+	top: 56px;
 	right: 0;
 	padding: 10px;
 	border-radius: 2px;
-	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 2px 2px rgba(105, 45, 45, 0.74);
 	box-sizing: border-box;
 }
 
@@ -233,7 +237,7 @@ legend.scheduler-border {
 }
 
 .header-user-dropdown .header-user-menu ul li a:hover{
-	opacity:0.9;
+	opacity:0.6;
 }
 
 .header-user-dropdown .header-user-menu ul li a.highlight{
@@ -243,9 +247,9 @@ legend.scheduler-border {
 .header-user-dropdown .header-user-menu img{
 	border-radius:50%;
 	position:absolute;
-	top:6px;
-	max-width: 28px;
-	left:110px;
+	top:2px;
+	max-width: 35px;
+	left:105px;
 	
 }
 
@@ -259,6 +263,11 @@ legend.scheduler-border {
     outline-color: -webkit-focus-ring-color;
     outline-style: auto;
     outline-width: 5px;
+}
+.header-left-blocks{
+	float: left;
+    height: 60px;
+    border-right: 1px solid #ccc;
 }
 
 

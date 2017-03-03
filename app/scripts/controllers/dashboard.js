@@ -156,6 +156,7 @@ $scope.chartConfig.series = [{
            getEventFilterCount();
            //getDocuments($scope.selectedValue);
            $scope.setSelected($scope.selectedValue);
+           getFilterLocations();
 
 
                         }).catch(function(err) {
@@ -439,6 +440,121 @@ $scope.EventText=filterEvent+' Events'
 
  };
 
+ function getFilterLocations(){
+  var locations=[];
+  var locationWiseData=[];
+ $scope.filteredLocations = $filter('unique')($scope.events, 'extras.grievance_location');
+ angular.forEach($scope.filteredLocations, function(filterlocation){
+locations.push(filterlocation.extras.grievance_location);
+ });
+ angular.forEach(locations, function(location){
+   var filteredlocationData = $filter('filter')($scope.events, function(event){
+            
+                return event.extras.grievance_location==location;
+            });
+   var created=$filter('filter')(filteredlocationData, function(event){
+            
+                return event.status=='Created';
+            });
+   var approved=$filter('filter')(filteredlocationData, function(event){
+            
+                return event.status=='Approved';
+            });
+   var rejected=$filter('filter')(filteredlocationData, function(event){
+            
+                return event.status=='Rejected';
+            });
+   var submitted=$filter('filter')(filteredlocationData, function(event){
+            
+                return event.status=='Submitted';
+            });
+   
+   var dummyObj={};
+
+   dummyObj.location=location;
+   dummyObj.created=created.length;
+   dummyObj.approved=approved.length;
+   dummyObj.rejected=rejected.length;
+   dummyObj.submitted=submitted.length;
+   locationWiseData.push(dummyObj);
+
+
+
+
+ });
+ //console.log("----------->"+JSON.stringify(locationWiseData));
+ var locationsArray=[];
+ var createdArray=[];
+var approvedArray=[];
+ var rejectedArray=[];
+ var submittedArray=[];
+
+angular.forEach(locationWiseData, function(dummyObj){ 
+locationsArray.push(dummyObj.location);
+createdArray.push(dummyObj.created);
+approvedArray.push(dummyObj.approved);
+rejectedArray.push(dummyObj.rejected);
+submittedArray.push(dummyObj.submitted);
+});
+
+
+  
+    $scope.chartOptions =  {
+      colors: ['#1f5dea', '#43cb83', '#c60000', '#ff9000'],
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: '<b>Event Location wise and Status wise</b>'
+    },
+    subtitle: {
+        text: 'GHMC'
+    },
+    xAxis: {
+        categories:locationsArray,
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Greviences(count)'
+        }
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y} </b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: 'Pending',
+        data: createdArray
+
+    }, {
+        name: 'Approved',
+        data: approvedArray
+
+    }, {
+        name: 'Rejected',
+        data: rejectedArray
+
+    }, {
+        name: 'Submitted',
+        data: submittedArray
+
+    }]
+};
+console.log("----------->"+JSON.stringify($scope.chartOptions));
+ };
+
   function getEventFilterCount(){
      $scope.UpcomingEvents = $filter('filter')($scope.events, function(event){
             
@@ -466,15 +582,17 @@ $scope.EventText=filterEvent+' Events'
   };
   ///////////for charts data
         // Sample options for first chart
-                $scope.chartOptions =  {
+        /////
+ $scope.chartOptions =  {
+  colors: ['#1f5dea', '#43cb83', '#c60000', '#ff9000'],
     chart: {
         type: 'column'
     },
     title: {
-        text: 'Monthly Average Rainfall'
+        text: '<b>Event Location wise and Status wise</b>'
     },
     subtitle: {
-        text: 'Source: WorldClimate.com'
+        text: 'GHMC'
     },
     xAxis: {
         categories: [
@@ -496,13 +614,13 @@ $scope.EventText=filterEvent+' Events'
     yAxis: {
         min: 0,
         title: {
-            text: 'Rainfall (mm)'
+            text: 'Greviences(count)'
         }
     },
     tooltip: {
         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+            '<td style="padding:0"><b>{point.y}</b></td></tr>',
         footerFormat: '</table>',
         shared: true,
         useHTML: true
@@ -514,23 +632,25 @@ $scope.EventText=filterEvent+' Events'
         }
     },
     series: [{
-        name: 'Tokyo',
+        name: 'Pending',
         data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
 
     }, {
-        name: 'New York',
+        name: 'Approved',
         data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
 
     }, {
-        name: 'London',
+        name: 'Rejected',
         data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
 
     }, {
-        name: 'Berlin',
+        name: 'Submitted',
         data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
 
     }]
 };
+//////
+               
 
 
   });
