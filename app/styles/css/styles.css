@@ -1,7 +1,8 @@
 body{
 	
 	margin:0px;
-	    background: #edeff0;
+	background-color: #edeff0;
+
 }
 
 .linkStyle{
@@ -17,6 +18,9 @@ body{
     border-radius: 2px;
     margin-bottom: 15px;
     border: 2px solid #a1a1a1;
+    padding: 5px 10px;
+    border-radius: 8px;
+    /*margin-left: 90px;*/
 }
 
 .info-box-content {
@@ -39,21 +43,30 @@ body{
     background: rgba(0,0,0,0.2);
 }
 
-.bg-yellow {
-    background-color: #f39c12 !important;
+.col-md-12, .section{
+	/*height: 50px;*/
+    background-color: white;
+}
+
+.bg-red {
+    background-color: #c60000 !important;
     color: #fff !important;
 }
-.bg-green {
-    background-color: #00a65a !important;
+.bg-blue {
+    background-color: #1f5dea !important;
     color: #fff !important;
 }
 
-.bg-aqua {
-    background-color: #00c0ef !important;
+.bg-green {
+    background-color: #43cb83 !important;
     color: #fff !important;
 }
-.bg-red {
-    background-color: #dd4b39 !important;
+.bg-orange {
+    background-color: #ff9000 !important;
+    color: #fff !important;
+}
+.bg-black {
+    background-color: #333333 !important;
     color: #fff !important;
 }
 

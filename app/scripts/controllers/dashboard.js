@@ -13,22 +13,32 @@ angular.module('ghmcApp')
         chart: {
         plotBackgroundColor: null,
         plotBorderWidth: null,
+         width: 490,
         plotShadow: false,
         type: 'pie'
     },
+    colors: ['#1f5dea', '#43cb83', '#ff9000', '#c60000', '#64E572', '#FF9655', '#FFF263','#6AF9C4'],
+
+    tooltip: {
+            pointFormat: '<b>{point.percentage:.1f}%</b>'
+        },
 
         plotOptions: {
         pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-                enabled: true,
-                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                     format: '{point.percentage:.1f} %',
+                     distance: -50,
                 style: {
-                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+
+                    fontWeight: 'bold',
+                    color: 'white'
                 }
+                },
+                showInLegend: true
             }
-        }
     },
         series: [{
             data: [/*{
@@ -48,7 +58,7 @@ angular.module('ghmcApp')
         }],
         
         title: {
-            text: 'Events Problem Wise'
+            text: '<b>Issues Summary</b>'
         },
 
         loading: false

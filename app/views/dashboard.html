@@ -87,146 +87,111 @@
 <!-- end Modal -->
 <div class="row">
   <div class="col-md-8">
+  
+   <div class="row">
+   <div class="col-md-12" >
+   <section>
+    <h4><b>Events Summary</b></h4>
+   
+  
+  <div class="row">
+
+         <div class="col-md-2 col-md-offset-1">
+         
+          <!-- <div class="info-box linkStyle" ng-click="getEventFilter('Submitted')"  ng-class="{eventFilter : 'Submitted' === selectedFilterStatus}"> -->
+          <!-- <div class="info-box"> -->
+          
+            <!-- <span class="info-box-icon bg-red"></span> -->
+
+            <div class="info-box bg-orange"><center>
+                <span class="info-box-text">Upcoming</span>
+                <span class="info-box-number">{{Upcoming}}</span>    
+            </center>
+            </div>
+            <!-- /.info-box-content -->
+          <!-- </div> -->
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-2">
+          <!-- <div class="info-box linkStyle" ng-click="getEventFilter('Upcoming')"  ng-class="{eventFilter : 'upcoming' === selectedFilterStatus}"> -->
+          <div class="info-box bg-green">
+            <!-- <span class="info-box-icon bg-aqua"><i class="fa fa-envelope-o"></i></span> -->
+
+            <!-- <div class="info-box-content"> -->
+            <center>
+              <span class="info-box-text">Approved</span>
+              <span class="info-box-number">{{Approved}}</span>
+              </center>
+            <!-- </div> -->
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-2">
+          <!-- <div class="info-box linkStyle" ng-click="getEventFilter('Approved')"  ng-class="{eventFilter : 'Approved' === selectedFilterStatus}"> -->
+          <div class="info-box bg-blue">
+            <!-- <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span> -->
+
+            <!-- <div class="info-box-content"> -->
+            <center>
+              <span class="info-box-text">Pending</span>
+              <span class="info-box-number">{{Submitted}}</span>
+              </center>
+            <!-- </div> -->
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-2">
+          <!-- <div class="info-box linkStyle" ng-click="getEventFilter('Rejected')"  ng-class="{eventFilter : 'Rejected' === selectedFilterStatus}"> -->
+          <div class="info-box bg-red">
+            <!-- <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span> -->
+            <center>
+            <!-- <div class="info-box-content"> -->
+              <span class="info-box-text">Rejected</span>
+              <span class="info-box-number">{{Rejected}}</span>
+              </center>
+            <!-- </div> -->
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-2">
+          <!-- <div class="info-box linkStyle" ng-click="getEventFilter('Rejected')"  ng-class="{eventFilter : 'Rejected' === selectedFilterStatus}"> -->
+          <div class="info-box bg-black">
+            <!-- <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span> -->
+            <center>
+            <!-- <div class="info-box-content"> -->
+              <span class="info-box-text">Closed</span>
+              <span class="info-box-number">{{21}}</span>
+              </center>
+            <!-- </div> -->
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        
+      </div>
+       <!--  <div class="box-blocks" id="map">
+      	<b>Map View Here</b>
+    </div> -->
+    </section>
+   </div>
+ 
   <div class="row">
    <div class="col-md-12">
      <hc-chart style="width:65%;border-radius: 2px;height:70%" options="chartOptions">Placeholder for generic chart</hc-chart>
    </div>
     
   </div>
-  <fieldset class="scheduler-border">
-  <legend class="scheduler-border">Events Summary</legend>
-  <div class="row">
-   <div class="col-md-12" >
-  <div class="row">
-         <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box linkStyle" ng-click="getEventFilter('Submitted')"  ng-class="{eventFilter : 'Submitted' === selectedFilterStatus}">
-            <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Pending</span>
-              <span class="info-box-number">{{Submitted}}</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box linkStyle" ng-click="getEventFilter('Upcoming')"  ng-class="{eventFilter : 'upcoming' === selectedFilterStatus}">
-            <span class="info-box-icon bg-aqua"><i class="fa fa-envelope-o"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Upcoming</span>
-              <span class="info-box-number">{{Upcoming}}</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box linkStyle" ng-click="getEventFilter('Approved')"  ng-class="{eventFilter : 'Approved' === selectedFilterStatus}">
-            <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Approved</span>
-              <span class="info-box-number">{{Approved}}</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box linkStyle" ng-click="getEventFilter('Rejected')"  ng-class="{eventFilter : 'Rejected' === selectedFilterStatus}">
-            <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Rejected</span>
-              <span class="info-box-number">{{Rejected}}</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        
-      </div>
-       <!--  <div class="box-blocks" id="map">
-      	<b>Map View Here</b>
-    </div> -->
-   </div>
-  </div>
-  </fieldset>
   <div class="row">
   <div class="col-md-12">
   	<div  kt-sleek-scrollBar is-bar-shown="barShown">
-    <!-- <form>
-    <div class="form-group">
-      <div class="input-group">
-        <div class="input-group-addon"><i class="fa fa-search"></i></div>
-        <input type="text" class="form-control" placeholder="Search" ng-model="searchFish">
-      </div>      
-    </div>
-  </form>
    
-  <table class="table table-hover table-bordered">
-    
-    <thead>
-      <tr>
-        <td>
-          <a href="" ng-click="sortType = 'created'; sortReverse = !sortReverse">
-            NAME
-            <span ng-show="sortType == 'created' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'created' && sortReverse" class="fa fa-caret-up"></span>
-          </a>
-        </td>
-        <td>
-          <a href="" ng-click="sortType = 'name'; sortReverse = !sortReverse">
-          DATE/TIME 
-            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
-          </a>
-        </td>
-        <td>
-          <a href="" ng-click="sortType = 'status'; sortReverse = !sortReverse">
-          ISSUE DESCRIPTION 
-            <span ng-show="sortType == 'status' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'status' && sortReverse" class="fa fa-caret-up"></span>
-          </a>
-        </td>
-
-        <td>
-          <a href="" ng-click="sortType = 'status'; sortReverse = !sortReverse">
-           LOCATION 
-            <span ng-show="sortType == 'status' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'status' && sortReverse" class="fa fa-caret-up"></span>
-          </a>
-        </td>
-         <td>
-          <a href="" ng-click="sortType = 'status'; sortReverse = !sortReverse">
-          STATUS 
-            <span ng-show="sortType == 'status' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'status' && sortReverse" class="fa fa-caret-up"></span>
-          </a>
-        </td>
-        <td>
-        </td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-click="setSelected(event.id)" class="linkStyle" ng-class="{selected : event.id === selectedValue}" ng-repeat="event in events | orderBy:sortType:sortReverse | filter:searchFish">
-        <td>{{ event.name }}</td>
-        <td>{{event.created | date:'yyyy-MM-dd'}} </td>
-        <td>{{ event.extras.grievance_description }}</td>
-        <td>{{ event.extras.grievance_location }}</td>
-        <td>{{ event.status }}</td>
-       <td> <button data-toggle="modal" data-target="#myModal" ng-click="selectedEvent(event)" class="btn mini blue-stripe">Edit</button></td>
-      </tr>
-    </tbody>
-    
-  </table>
-  -->
   <fieldset class="scheduler-border">
   <legend class="scheduler-border">Pending Events for Approval</legend>
     <h4><b>{{EventText}}</b>
@@ -293,80 +258,12 @@
   </table>
   </fieldset>
   
-  <!-- <div class="container"> -->
-  <!-- <h2>Accordion Example</h2> -->
-<!-- <table class="table table-hover table-bordered col-md-4">
-      <tr>
-        <td>
-            LOCATIONS
-        </td>
-      </tr>
-    <tr ng-repeat="event in events ">
-        
-        <td> <a ng-click="locationBasedEvents(event)" href=""> {{ event.extras.grievance_location }} </a> </td>
-        
-  </tr>
-  
-  </table>
- -->  <!-- <p><strong>Note:</strong> The <strong>data-parent</strong> attribute</p>
-  <div class="panel-group" id="accordion">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse1" href="">Collapsible Group 1</a>
-        </h4>
-      </div>
-      <div id="collapse1" class="panel-collapse collapse in">
-        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit</div>
-      </div>
-    </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse2" href="">Collapsible Group 2</a>
-        </h4>
-      </div>
-      <div id="collapse2" class="panel-collapse collapse">
-        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit</div>
-      </div>
-    </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse3" href="">Collapsible Group 3</a>
-        </h4>
-      </div>
-      <div id="collapse3" class="panel-collapse collapse">
-        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit</div>
-      </div>
-    </div>
-  </div> 
- --><!-- </div> -->
-
   </div>
   </div>
-  <!-- <div class="row">
-   <div class="col-md-12" > 
-    <div class="row"> 
-      <hc-chart title="Events Location Wise Summary" data="pieData">Placeholder for pie chart</hc-chart> 
-     <fieldset class="scheduler-border">
-     <legend class="scheduler-border">Events Location Wise and Status wise Summary</legend>
-     <div id="container" ></div>
-     </fieldset>
-     </div> 
-    </div>
-  </div> -->
-<!--    <div class="row">
-   <div class="col-md-12" >
-   <hc-chart options="chartOptions">Placeholder for generic chart</hc-chart>
-   </div>
-  </div> -->
   </div>
   	
   </div>
-
-  
-  
+</div>
   <div class="col-md-4">
   	<div class="">
     <div class="row">
