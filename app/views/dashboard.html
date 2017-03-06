@@ -151,7 +151,7 @@
             <!-- <span class="info-box-icon bg-red"></span> -->
 
             <div class="info-box bg-orange" ng-click="getEventFilter('Submitted')"  ng-class="{eventFilter : 'Submitted' === selectedFilterStatus}"><center>
-                <span class="info-box-text">Completed</span>
+                <span class="info-box-text">Submitted</span>
                 <span class="info-box-number">{{Submitted}}</span>    
             </center>
             </div>
@@ -275,14 +275,14 @@
                           
                         </select>
                         </div>
-                        <div class="form-group" style="position: absolute;right: 150px;top: 10px">
+                        <div class="form-group" style="position: absolute;right: 250px;top: 10px">
                          <select class="form-control col-sm-2" ng-model="selectedItem" ng-change="getEventFilter(selectedItem)">
                         <option value="" selected>Status</option>
                         <option value="Upcoming" >Upcoming</option>
                          <option value="Created" >Pending</option>
                          <option value="Approved" >Approved</option>
                          <option value="Rejected" >Rejected</option>
-                         <option value="Submitted" >Completed</option>
+                         <option value="Submitted" >Submitted</option>
                          <option value="Closed" >Closed</option> 
                         </select>
                         </div>
@@ -352,12 +352,12 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-click="setSelected(event.id)" class="linkStyle" ng-class="{selected : event.id === selectedValue}" ng-repeat="event in filteredEvents | orderBy:sortType:sortReverse | filter:searchFish">
+      <tr ng-click="setSelected(event.id)" class="linkStyle" ng-class="{selected : event.id === selectedValue}" ng-repeat="event in filteredEvents | orderBy:sortType:sortReverse | filter:searchFish.extras.grievance_location">
         <td>{{event.created | date:'yyyy-MM-dd'||'  ---'}}</td>
-        <td><span ng-if="(event.start | date:'yyyy-MM-dd')>=(currentdate| date:'yyyy-MM-dd')">{{event.start | date:'yyyy-MM-dd'}}</span><span ng-if="(event.start | date:'yyyy-MM-dd')<(currentdate| date:'yyyy-MM-dd')">---</span> </td>
+        <td><span ng-if="(event.status!='Created') ">{{event.start | date:'yyyy-MM-dd'}}</span><span ng-if="(event.status=='Created')">---</span> </td>
         <td>{{event.extras.posted_by||'  ---' }} </td>
         <td>{{ event.extras.grievance_type ||'  ---'}}</td>
-        <td>{{ event.extras.grievance_location ||'  ---'}}</td>
+        <td>{{ event.extras.grievance_location}}</td>
         <td>{{ event.extras.members_required ||'  ---'}}</td>
         <td>{{ event.extras.joined_members_count||'  ---' }}</td>
         <td>{{ event.status ||'  ---'}}</td>
