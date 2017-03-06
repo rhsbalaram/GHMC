@@ -360,7 +360,7 @@
         <td>{{ event.extras.grievance_location}}</td>
         <td>{{ event.extras.members_required ||'  ---'}}</td>
         <td>{{ event.extras.joined_members_count||'  ---' }}</td>
-        <td>{{ event.status ||'  ---'}}</td>
+        <td><span ng-if="(event.status=='Created') ">Pending</span><span ng-if="(event.status!='Created') ">{{ event.status ||'  ---'}}</span></td>
        <td> <button data-toggle="modal" data-target="#myModal" ng-click="selectedEvent(event)" class="btn mini blue-stripe">Edit</button></td>
       </tr>
     </tbody>

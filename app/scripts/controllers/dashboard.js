@@ -203,12 +203,12 @@ console.log('Failure in events call');
                        /////////getting userName
                         $scope.getUserName=function(userId){
 
-                         
+                        
               securityModel.getVolunteers(userId).then(function(response) {
 
        var user = response.data || response;
                              
-      $scope.userName=user.firstName;
+      return user.firstName;
                             
 
         console.log(JSON.stringify(response));
