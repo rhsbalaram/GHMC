@@ -99,6 +99,7 @@ legend.scheduler-border {
 
 .selected{
 	background: #deeade;
+	outline: -webkit-focus-ring-color auto 5px;
 }
 .selected:hover{
 	background: green;
@@ -148,7 +149,7 @@ legend.scheduler-border {
 .header-user-dropdown .header-limiter img{
 	float: left;
 	
-	max-width: 45px;
+	max-width: 95px;
 	margin:5px;
 }
 

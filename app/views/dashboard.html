@@ -4,7 +4,7 @@
 
 	<div class="header-limiter">
   <div class="header-left-blocks">
-    <img  ng-src="images/ghmc.gif" alt="GHMC" />
+    <img  ng-src="images/ghmc1.png" alt="GHMC" />
   </div>
   <div class="header-left-blocks" style="border-color: white;padding-left: 5px">
     <span style="line-height:60px;font-size: 24px ">Smart Citizen</span>
@@ -355,14 +355,14 @@
     </thead>
     <tbody>
       <tr ng-click="setSelected(event.id)" class="linkStyle" ng-class="{selected : event.id === selectedValue}" ng-repeat="event in filteredEvents | orderBy:sortType:sortReverse | filter:searchFish">
-        <td>{{event.created | date:'yyyy-MM-dd'}}</td>
-        <td>{{event.start | date:'yyyy-MM-dd'}} </td>
-        <td>{{event.extras.posted_by }} </td>
-        <td>{{ event.extras.grievance_type }}</td>
-        <td>{{ event.extras.grievance_location }}</td>
-        <td>{{ event.extras.members_required }}</td>
-        <td>{{ event.extras.joined_members_count }}</td>
-        <td>{{ event.status }}</td>
+        <td>{{event.created | date:'yyyy-MM-dd'||'  ---'}}</td>
+        <td><span ng-if="(event.start | date:'yyyy-MM-dd')>=(currentdate| date:'yyyy-MM-dd')">{{event.start | date:'yyyy-MM-dd'}}</span><span ng-if="(event.start | date:'yyyy-MM-dd')<(currentdate| date:'yyyy-MM-dd')">---</span> </td>
+        <td>{{event.extras.posted_by||'  ---' }} </td>
+        <td>{{ event.extras.grievance_type ||'  ---'}}</td>
+        <td>{{ event.extras.grievance_location ||'  ---'}}</td>
+        <td>{{ event.extras.members_required ||'  ---'}}</td>
+        <td>{{ event.extras.joined_members_count||'  ---' }}</td>
+        <td>{{ event.status ||'  ---'}}</td>
        <td> <button data-toggle="modal" data-target="#myModal" ng-click="selectedEvent(event)" class="btn mini blue-stripe">Edit</button></td>
       </tr>
     </tbody>

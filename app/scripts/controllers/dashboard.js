@@ -184,7 +184,7 @@ $scope.chartConfig.series = [{
                          $scope.getEventFilter('');
                          if(!$scope.selectedValue){
 
-                         var firstEvent=$scope.filteredEvents[0];
+                         var firstEvent=$scope.filteredEvents[1];
                          // $scope.members =$scope.events[0].extras.joined_members;
              $scope.selectedValue=  firstEvent.id;
            }
@@ -556,6 +556,7 @@ console.log('Failure in events call');
  $scope.Approved=0;
  $scope.Rejected=0;
  $scope.Submitted=0;
+  $scope.Closed=0;
  $scope.getEventFilter=function(filterEvent){
   $scope.searchFish='';
 $scope.EventText=filterEvent+' Events'
@@ -615,6 +616,10 @@ locations.push(filterlocation.extras.grievance_location);
             
                 return event.status=='Submitted';
             });
+    var closed=$filter('filter')(filteredlocationData, function(event){
+            
+                return event.status=='Closed';
+            });
    
    var dummyObj={};
 
@@ -623,6 +628,7 @@ locations.push(filterlocation.extras.grievance_location);
    dummyObj.approved=approved.length;
    dummyObj.rejected=rejected.length;
    dummyObj.submitted=submitted.length;
+   dummyObj.closed=closed.length;
    locationWiseData.push(dummyObj);
 
 
@@ -635,6 +641,7 @@ locations.push(filterlocation.extras.grievance_location);
 var approvedArray=[];
  var rejectedArray=[];
  var submittedArray=[];
+ var closedArray=[];
 
 angular.forEach(locationWiseData, function(dummyObj){ 
 locationsArray.push(dummyObj.location);
@@ -642,12 +649,13 @@ createdArray.push(dummyObj.created);
 approvedArray.push(dummyObj.approved);
 rejectedArray.push(dummyObj.rejected);
 submittedArray.push(dummyObj.submitted);
+closedArray.push(dummyObj.closed);
 });
 
 
   
     $scope.chartOptions =  {
-      colors: ['#1f5dea', '#43cb83', '#c60000', '#ff9000'],
+      colors: ['#1f5dea', '#43cb83', '#c60000', '#ff9000','#333333'],
     chart: {
         type: 'column'
     },
@@ -696,6 +704,11 @@ submittedArray.push(dummyObj.submitted);
     }, {
         name: 'Submitted',
         data: submittedArray
+
+    },
+   {
+        name: 'Closed',
+        data: closedArray
 
     }]
 };
@@ -803,7 +816,7 @@ console.log("----------->"+JSON.stringify($scope.chartOptions));
     }]
 };
 //////
-               
+     $scope.currentdate=new Date();       
 
 
   });

@@ -196,8 +196,10 @@ angular.module('ghmcApp')
                         .catch(function(err) {
                             if (err.data !== null) {
                                 deferred.reject(err);
+                                $state.go('signin');
                             } else {
                                 deferred.reject('Unable to Sign-In. Please retry.');
+                                $state.go('signin');
                             }
                         });
                     return deferred.promise;

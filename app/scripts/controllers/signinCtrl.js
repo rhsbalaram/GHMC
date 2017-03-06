@@ -13,13 +13,21 @@ angular.module('ghmcApp')
   
     
    $scope.login=function(){
+    $scope.dataLoading=true;
    	var  userEmail=$scope.username;
      var userpassword=$scope.password;
      var phoneno=$scope.Phoneno;
    	securityModel.authenticate(userEmail, userpassword, phoneno).then(function(response) {
+       $scope.dataLoading=false;
                            
 
                             $state.go('dashboard');
+                        }).catch(function(err) {
+                           console.log('error in login');
+                            $scope.dataLoading=false;
+                           $state.go('signin');
+                           $scope.invalidLogin=true;
+
                         });
 
    }
