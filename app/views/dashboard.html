@@ -355,7 +355,7 @@
       <tr ng-click="setSelected(event.id)" class="linkStyle" ng-class="{selected : event.id === selectedValue}" ng-repeat="event in filteredEvents | orderBy:sortType:sortReverse | filter:searchFish.extras.grievance_location">
         <td>{{event.created | date:'yyyy-MM-dd'||'  ---'}}</td>
         <td><span ng-if="(event.status!='Created') ">{{event.start | date:'yyyy-MM-dd'}}</span><span ng-if="(event.status=='Created')">---</span> </td>
-        <td>{{event.extras.posted_by||'  ---' }} </td>
+        <td>{{userNamesMap[event.userId]}} </td>
         <td>{{ event.extras.grievance_type ||'  ---'}}</td>
         <td>{{ event.extras.grievance_location}}</td>
         <td>{{ event.extras.members_required ||'  ---'}}</td>

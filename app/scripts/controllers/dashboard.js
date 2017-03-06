@@ -67,7 +67,7 @@ angular.module('ghmcApp')
     return chartConfig;
 })
           
-  .controller('dashboardCtrl', function (SecureStorage,securityModel,$scope,$q,$rootScope,Chart,$filter) {
+  .controller('dashboardCtrl', function (SecureStorage,securityModel,$scope,$q,$rootScope,Chart,$filter,$timeout) {
 
      $scope.chartConfig = Chart;
   
@@ -203,13 +203,14 @@ console.log('Failure in events call');
                        /////////getting userName
                         $scope.getUserName=function(userId){
 
-                        
+                        $scope.userNamesMap={};
               securityModel.getVolunteers(userId).then(function(response) {
 
        var user = response.data || response;
                              
-      return user.firstName;
-                            
+      
+                    
+                   $scope.userNamesMap[userId]= user.firstName;
 
         console.log(JSON.stringify(response));
 
@@ -223,6 +224,8 @@ console.log('Failure in events call');
 
 
                         };
+
+                       
 
                         ////////////
 
