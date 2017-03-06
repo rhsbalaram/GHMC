@@ -13,7 +13,7 @@ angular.module('ghmcApp')
         chart: {
         plotBackgroundColor: null,
         plotBorderWidth: null,
-         width: 490,
+         
         plotShadow: false,
         type: 'pie'
     },
@@ -156,7 +156,7 @@ $scope.chartConfig.series = [{
                          drawMarker();
                         // console.log('------'+JSON.stringify(markersMap));
                          showOnMap();
-                         $scope.getEventFilter('Submitted');
+                         $scope.getEventFilter('');
                          if(!$scope.selectedValue){
 
                          var firstEvent=$scope.filteredEvents[0];
@@ -251,6 +251,7 @@ console.log('Successfull of events call');
                          showOnMap();
                          
            //getDocuments($scope.selectedValue);
+
            $scope.getEventFilter($scope.selectedFilterStatus);
            getEventFilterCount();
             var firstEvent=$scope.filteredEvents[0];
@@ -437,7 +438,7 @@ $scope.EventText=filterEvent+' Events'
             });
       
   }
-  else{
+  else if(filterEvent!=""){
      $scope.filteredEvents = $filter('filter')($scope.filteredEvents, function(event){
             
                 return event.status==filterEvent;
@@ -566,9 +567,9 @@ console.log("----------->"+JSON.stringify($scope.chartOptions));
  };
 
   function getEventFilterCount(){
-     $scope.UpcomingEvents = $filter('filter')($scope.events, function(event){
+     $scope.PendingEvents = $filter('filter')($scope.events, function(event){
             
-                return new Date(event.start)>new Date();
+                return event.status=='Created';
             });
      $scope.ApprovedEvents = $filter('filter')($scope.events, function(event){
             
@@ -582,12 +583,18 @@ console.log("----------->"+JSON.stringify($scope.chartOptions));
             
                 return event.status=='Submitted';
             });
+     $scope.ClosedEvents = $filter('filter')($scope.events, function(event){
+            
+                return event.status=='Closed';
+            });
 
 
-     $scope.Upcoming=$scope.UpcomingEvents.length;
+
+     $scope.Pending=$scope.PendingEvents.length;
      $scope.Approved=$scope.ApprovedEvents.length;
      $scope.Rejected=$scope.RejectedEvents.length;
       $scope.Submitted=$scope.SubmittedEvents.length;
+       $scope.Closed=$scope.ClosedEvents.length;
 
   };
   ///////////for charts data

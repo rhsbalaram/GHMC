@@ -138,10 +138,10 @@ angular.module('ghmcApp')
 
                             data = response.data || response;
 
-                            secureStorage.set('access_token', 'WOB24SeAI8rMQlLznG9xCIB6sbnf9uLElwQkyFoXB2ackgP864LaPnpymaMZTmhf');//data.id
+                            secureStorage.set('access_token', data.id);//data.id
 
                             userId = data.userId; // Here we got  device and token and subscription and extraObject.
-                            userId='58a6da1d05ea2b66a6cb800d'
+                          //  userId='58a6da1d05ea2b66a6cb800d'
 
                             userRequest.get(userId + '?filter[include]=enterprise')
                                 .then(function(userResponse) {
@@ -230,7 +230,7 @@ angular.module('ghmcApp')
                        events=Restangular.all('enterprises'),
                         userDetails = JSON.parse(model.getLoggedInUserDetails());
 console.log('enterprises/'+userDetails.enterpriseId+'/events');
-                        events.get(userDetails.enterpriseId+'/events')
+                        events.get('58a6da1c05ea2b66a6cb800c'+'/events')//58a6da1c05ea2b66a6cb800c userDetails.enterpriseId
                             .then(function(response) {
                             	console.log('executed successfully');
                             	

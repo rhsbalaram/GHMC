@@ -43,10 +43,7 @@ body{
     background: rgba(0,0,0,0.2);
 }
 
-.col-md-12, .section{
-	/*height: 50px;*/
-    background-color: white;
-}
+
 
 .bg-red {
     background-color: #c60000 !important;
@@ -118,6 +115,17 @@ legend.scheduler-border {
     margin-bottom: 10px;
     border-radius:5px;
    
+}
+.dashboard-block{
+    border: 1px solid #ccc;
+    background: white;
+    margin-bottom: 5px;
+    border-radius: 2px;
+}
+.dashboard-block h4{
+    margin-left: 35px;
+    margin-bottom: 20px;
+    margin-top: 15px;
 }
 
 .header-user-dropdown {

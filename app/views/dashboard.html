@@ -90,9 +90,12 @@
   
    <div class="row">
    <div class="col-md-12" >
-   <section>
+   <div class="dashboard-block">
+   <div class="row">
+   <div class="col-md-12" >
     <h4><b>Events Summary</b></h4>
-   
+    </div>
+   </div>
   
   <div class="row">
 
@@ -103,9 +106,9 @@
           
             <!-- <span class="info-box-icon bg-red"></span> -->
 
-            <div class="info-box bg-orange"><center>
-                <span class="info-box-text">Upcoming</span>
-                <span class="info-box-number">{{Upcoming}}</span>    
+            <div class="info-box bg-orange" ng-click="getEventFilter('Submitted')"  ng-class="{eventFilter : 'Submitted' === selectedFilterStatus}"><center>
+                <span class="info-box-text">Completed</span>
+                <span class="info-box-number">{{Submitted}}</span>    
             </center>
             </div>
             <!-- /.info-box-content -->
@@ -115,7 +118,7 @@
         <!-- /.col -->
         <div class="col-md-2">
           <!-- <div class="info-box linkStyle" ng-click="getEventFilter('Upcoming')"  ng-class="{eventFilter : 'upcoming' === selectedFilterStatus}"> -->
-          <div class="info-box bg-green">
+          <div class="info-box bg-green" ng-click="getEventFilter('Approved')"  ng-class="{eventFilter : 'Approved' === selectedFilterStatus}">
             <!-- <span class="info-box-icon bg-aqua"><i class="fa fa-envelope-o"></i></span> -->
 
             <!-- <div class="info-box-content"> -->
@@ -131,13 +134,13 @@
         <!-- /.col -->
         <div class="col-md-2">
           <!-- <div class="info-box linkStyle" ng-click="getEventFilter('Approved')"  ng-class="{eventFilter : 'Approved' === selectedFilterStatus}"> -->
-          <div class="info-box bg-blue">
+          <div class="info-box bg-blue" ng-click="getEventFilter('Created')"  ng-class="{eventFilter : 'Created' === selectedFilterStatus}">
             <!-- <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span> -->
 
             <!-- <div class="info-box-content"> -->
             <center>
               <span class="info-box-text">Pending</span>
-              <span class="info-box-number">{{Submitted}}</span>
+              <span class="info-box-number">{{Pending}}</span>
               </center>
             <!-- </div> -->
             <!-- /.info-box-content -->
@@ -147,7 +150,7 @@
         <!-- /.col -->
         <div class="col-md-2">
           <!-- <div class="info-box linkStyle" ng-click="getEventFilter('Rejected')"  ng-class="{eventFilter : 'Rejected' === selectedFilterStatus}"> -->
-          <div class="info-box bg-red">
+          <div class="info-box bg-red" ng-click="getEventFilter('Rejected')"  ng-class="{eventFilter : 'Rejected' === selectedFilterStatus}">
             <!-- <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span> -->
             <center>
             <!-- <div class="info-box-content"> -->
@@ -162,12 +165,12 @@
         <!-- /.col -->
         <div class="col-md-2">
           <!-- <div class="info-box linkStyle" ng-click="getEventFilter('Rejected')"  ng-class="{eventFilter : 'Rejected' === selectedFilterStatus}"> -->
-          <div class="info-box bg-black">
+          <div class="info-box bg-black" ng-click="getEventFilter('Closed')"  ng-class="{eventFilter : 'Closed' === selectedFilterStatus}">
             <!-- <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span> -->
             <center>
             <!-- <div class="info-box-content"> -->
               <span class="info-box-text">Closed</span>
-              <span class="info-box-number">{{21}}</span>
+              <span class="info-box-number">{{Closed}}</span>
               </center>
             <!-- </div> -->
             <!-- /.info-box-content -->
@@ -176,33 +179,72 @@
         </div>
         
       </div>
+      <br>
        <!--  <div class="box-blocks" id="map">
       	<b>Map View Here</b>
     </div> -->
-    </section>
+    </div>
    </div>
  
-  <div class="row">
+  
    <div class="col-md-12">
-     <hc-chart style="width:65%;border-radius: 2px;height:70%" options="chartOptions">Placeholder for generic chart</hc-chart>
+   <div class="dashboard-block" style="height:606px">
+
+     <hc-chart style="width:63%;border-radius: 2px;height:75%" options="chartOptions">Placeholder for generic chart</hc-chart>
+   </div>
    </div>
     
+  
+ 
+  	
   </div>
-  <div class="row">
+</div>
+  <div class="col-md-4">
+  	
+    <div class="row">
+     <div class="col-md-12 dashboard-block" >
+     <!-- <ul><li ng-repeat="e in pieData">{{e}}</li></ul> -->
+     <!-- <hc-pie-chart title="Browser usage" data="pieData">Placeholder for pie chart</hc-pie-chart> -->
+      <!-- <button ng-click="update()">click to update chart</button> -->
+     
+     <highchart style= "width: 30%" id="chart1" config="chartConfig" class="span10"></highchart>
+     
+    </div>
+  </div>
+     <div class="row">
+     <div class="col-md-12 box-blocks" id="map">
+    </div>
+  </div>
+ 
+</div>
+ 
   <div class="col-md-12">
-  	<div  kt-sleek-scrollBar is-bar-shown="barShown">
-   
-  <fieldset class="scheduler-border">
-  <legend class="scheduler-border">Pending Events for Approval</legend>
-    <h4><b>{{EventText}}</b>
-     <span class="btn-group">
+  <div class="row" style="padding-left: 15px">
+    
+    <div class="col-md-12 dashboard-block">
+   <form class="form-inline" style="line-height: 50px;">
+    <span style="font-size: 20px;"><b>{{EventText}}</b></span>
+     <div class="form-group" style="position: absolute;right: 20px;top: 10px">
             
                         <select class="form-control col-sm-2" ng-model="searchFish" ng-options="filterevent.extras.grievance_location for filterevent in filteredEvents | unique:'extras.grievance_location'">
                         <option value="" selected>Location</option>
                           
                         </select>
-  </span></h4>
-  <table class="table table-hover table-bordered">
+                        </div>
+                        <div class="form-group" style="position: absolute;right: 150px;top: 10px">
+                         <select class="form-control col-sm-2" ng-model="selectedItem" ng-change="getEventFilter(selectedItem)">
+                        <option value="" selected>Status</option>
+                        <option value="Upcoming" >Upcoming</option>
+                         <option value="Created" >Pending</option>
+                         <option value="Approved" >Approved</option>
+                         <option value="Rejected" >Rejected</option>
+                         <option value="Submitted" >Completed</option>
+                         <option value="Closed" >Closed</option> 
+                        </select>
+                        </div>
+       </form>                 
+  
+  <table class="table table-hover table-striped">
     <thead>
       <tr>
         <td>
@@ -256,70 +298,9 @@
     </tbody>
     
   </table>
-  </fieldset>
+ </div>
   
+ </div>
   </div>
-  </div>
-  </div>
-  	
-  </div>
-</div>
-  <div class="col-md-4">
-  	<div class="">
-    <div class="row">
-     <div class="col-md-12 box-blocks" >
-     <!-- <ul><li ng-repeat="e in pieData">{{e}}</li></ul> -->
-     <!-- <hc-pie-chart title="Browser usage" data="pieData">Placeholder for pie chart</hc-pie-chart> -->
-      <!-- <button ng-click="update()">click to update chart</button> -->
-     <div class="row">
-     <highchart id="chart1" config="chartConfig" class="span10"></highchart>
-     </div>
-    </div>
-  </div>
-     <div class="row">
-     <div class="col-md-12 box-blocks" id="map">
-    </div>
-  </div>
-    <div class="row">
-     <div class="col-md-12 box-blocks" id="images">
-      <div class="row">
-      <div class="col-md-12" ng-repeat="imageDoc in imagesDoc">
-      	<img style="max-height:350px;width:100%" ng-src={{imageDoc.url}} alt="Nature" style="width:100%;margin:5px">
-      </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-   <div class="col-md-12 box-blocks">
-      	<div>
-  <h2>Volunteers</h2>
-   <div>         
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>In</th>
-        <th>Out</th>
-        <th>Points</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="user in Users">
-        <td>{{user.name}}</td>
-        <td>{{user.email}}</td>
-        <td>{{user.in}}</td>
-        <td>{{user.out}}</td>
-        <td>{{user.points}}</td>
-      </tr>
-      
-    </tbody>
-  </table>
-</div>
-    </div>
-   </div>
-  </div>
-</div>
-
-</div>
+  
 </div>
