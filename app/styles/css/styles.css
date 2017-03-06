@@ -108,6 +108,12 @@ legend.scheduler-border {
 {
 	padding-top: 10px;
 }
+
+.form-horizontal .control-label1{
+	margin-bottom: 0;
+	padding-top: ($padding-base-vertical + 1);
+}
+
 .box-blocks{
 	    min-height: 350px;
 

@@ -46,7 +46,7 @@
             <div class="modal-body">
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <label class="control-label col-md-4">Issue Description</label>
+                        <label class="control-label1 col-md-4">Issue Description</label>
                         <div class="col-md-8">
 
                         {{event.extras.grievance_description}}
@@ -55,59 +55,57 @@
                     </div>
 
                     <div class="form-group" id="images">
-                        <label class="control-label col-md-4" for="name">Issue Images</label>
+                        <label class="control-label1 col-md-4" for="name">Issue Images</label>
+
                         <div class="col-md-12" ng-repeat="imageDoc in imagesDoc">
-                            <img style="max-height:300px;width:100%" ng-src={{imageDoc.url}} alt="Nature" style="width:100%;margin:5px">
+                            <img style="max-height:300px;width:100%;padding: 10px 0px" ng-src={{imageDoc.url}} alt="Nature" style="width:100%;margin:5px">
                         </div>
+
                     </div>
                     <div class="form-group">
                     <div class="row">
    <!-- <div class="col-md-12 box-blocks"> -->
-        <div class="control-label col-md-4">
+        <!-- <div class="control-label1 col-md-4"> -->
   <!-- <h4>Volunteers</h2> -->
-   <div class="col-md-12">         
-  <table class="table table-striped">
+   <div class="col-md-12" style="padding: 0px 30px;">         
+  <table class="table">
     <thead>
       <tr>
         <th>Volunteer Name</th>
-        <!-- <th>Email</th>
-        <th>In</th>
-        <th>Out</th> -->
+        <th>Email</th>
         <th>Points</th>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="user in Users">
         <td>{{user.name}}</td>
-        <!-- <td>{{user.email}}</td>
-        <td>{{user.in}}</td>
-        <td>{{user.out}}</td> -->
+        <td>{{user.email}}</td>
         <td>{{user.points}}</td>
       </tr>
       
     </tbody>
   </table>
 </div>
-    </div>
+    <!-- </div> -->
    <!-- </div> -->
   </div>
   </div>
 
                     <div class="form-group">
-                        <label class="control-label col-md-2" for="members">Members Required:</label>
-                        <div class="col-md-10">
+                        <label class="control-label1 col-md-4" for="members">Members Required:</label>
+                        <div class="col-md-8">
                             <input type="text" class="form-control" ng-model="event.extras.members_required" placeholder="Enter number">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-2" for="date">Date:</label>
-                        <div class="col-md-10">
+                        <label class="control-label1 col-md-4" for="date">Date:</label>
+                        <div class="col-md-8">
                             <input type="date" class="form-control" ng-model="event.start"  placeholder="Enter Date">
                         </div>
                     </div>
                      <div class="form-group">
-                        <label class="control-label col-md-2" for="status">Change Status:</label>
-                        <div class="col-md-10">
+                        <label class="control-label1 col-md-4" for="status">Change Status:</label>
+                        <div class="col-md-8">
                         <select class="form-control" id="status" ng-model="event.status">
                             <option value="Approved">Approved</option>
                             <option value="Rejected">Rejected</option>

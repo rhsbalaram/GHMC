@@ -305,6 +305,14 @@ $scope.selectedEvent=null;
 
          }
 
+         else if(event.status=="Approved") {
+
+          setVolunteers(event.userId);
+
+          
+         }
+
+
          securityModel.postEventDetails(event).then(function(response) {
        
           var result=response;
@@ -388,6 +396,10 @@ console.log('Failure in events call');
                                newUser.email=user.email;
                              //  newUser.in="10 am";
                              //  newUser.out="5 pm";
+
+                             if(user.extras.points_accumulated==undefined){
+                              user.extras.points_accumulated = 0 ;
+                             }
                                newUser.points=user.extras.points_accumulated;
                                 UsersList.push(newUser);
        
@@ -421,6 +433,10 @@ console.log('Failure in events call');
     securityModel.getVolunteers(listOfjoined[i]).then(function(response) {
 
        var user = response.data || response;
+
+       if(user.extras.points_accumulated==undefined){
+        user.extras.points_accumulated = 0 ;
+       }
                              
                                user.extras.points_accumulated = Number(user.extras.points_accumulated) + 10;
 
