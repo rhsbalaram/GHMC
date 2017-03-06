@@ -288,6 +288,31 @@ console.log('events/'+event.id);
                         return deferred.promise;    
                 };
 
+
+                ////////////
+                 model.postVolunteersPoints=function(joined_members,user){
+                var deferred = $q.defer();
+
+
+                     var  events=Restangular.all('products/'+$rootScope.productId+'/users/'+joined_members);
+
+                     console.log('products/'+$rootScope.productId+'/users/'+joined_members);
+                    
+console.log('products/'+$rootScope.productId);
+                        events.customPUT(user)
+                            .then(function(response) {
+                                console.log('executed successfully update event');
+                                console.log('resoponse update'+JSON.stringify(response));
+                                
+                                deferred.resolve(response);
+                            }).catch(function() {
+                                deferred.reject(response);
+                            });
+
+                        return deferred.promise;    
+                };
+
+
                 /////////
                  model.getVolunteers=function(joined_members){
                 var deferred = $q.defer();

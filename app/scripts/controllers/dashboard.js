@@ -112,8 +112,33 @@ console.log('Successfull of events call');
                          $scope.events=response||response.data; 
 
                          var Events = $scope.events;
+
+                      
                         
                          for(var i=0;i<Events.length;i++){
+
+                          var listOfjoined=[];
+
+  if(Events[i].extras.joined_members){
+
+    listOfjoined=Events[i].extras.joined_members.split(',');
+
+              }
+
+
+                         // Events[i]["extras.joinedMembersCount"] = (listOfjoined.length);
+
+                          Events[i].extras.joined_members_count = (listOfjoined.length);
+                         var userName= Events[i].userId;
+                          $scope.getUserName(userName); 
+
+
+
+ 
+                             Events[i].extras.posted_by=$scope.userName;
+                         
+
+
 
                           if(Events[i].extras.grievance_type=="Environment"){
                             envCount++;
@@ -175,6 +200,32 @@ console.log('Failure in events call');
 
                     });
 
+                       /////////getting userName
+                        $scope.getUserName=function(userId){
+
+                         
+              securityModel.getVolunteers(userId).then(function(response) {
+
+       var user = response.data || response;
+                             
+      $scope.userName=user.firstName;
+                            
+
+        console.log(JSON.stringify(response));
+
+    }).catch(function(err) {
+
+        console.log('Failure in getVolunteers call');
+        
+
+
+    });
+
+
+                        };
+
+                        ////////////
+
       function getDocuments(eventId) {
 
     securityModel.getDocuments(eventId).then(function(response) {
@@ -232,6 +283,28 @@ $scope.selectedEvent=null;
         //$scope.myModal.dismiss('cancel');
          $('#myModal').modal('hide');
 
+         if(event.status=="Closed") {
+
+          setVolunteers(event.extras.joined_members);
+
+          //var UsersList =[];
+
+      /*   var Events=$scope.events;
+       for(var i=0;i<Events.length;i++){
+
+        if(Events[i].id==event.id){
+
+          Events[i].extras.joined_members
+
+         setVolunteers(Events[i].extras.joined_members);
+
+        }
+
+
+       }*/
+
+         }
+
          securityModel.postEventDetails(event).then(function(response) {
        
           var result=response;
@@ -245,6 +318,25 @@ $scope.selectedEvent=null;
 console.log('Successfull of events call');
                          $scope.events=response||response.data; 
                          //console.log('------'+JSON.stringify(markersMap));
+
+                          var Events = $scope.events;
+
+
+                        
+                         for(var i=0;i<Events.length;i++){
+
+                          var listOfjoined=[];
+  if(Events[i].extras.joined_members){
+    listOfjoined=Events[i].extras.joined_members.split(',');
+              }
+
+
+                         // Events[i]["extras.joinedMembersCount"] = (listOfjoined.length);
+
+                          Events[i].extras.joined_members_count = (listOfjoined.length);
+                        }
+
+$scope.events = Events ;
 
                          drawMarker();
                         // console.log('------'+JSON.stringify(markersMap));
@@ -294,9 +386,9 @@ console.log('Failure in events call');
                                 var newUser={};
                                newUser.name= user.firstName;
                                newUser.email=user.email;
-                               newUser.in="10 am";
-                               newUser.out="5 pm";
-                               newUser.points="20";
+                             //  newUser.in="10 am";
+                             //  newUser.out="5 pm";
+                               newUser.points=user.extras.points_accumulated;
                                 UsersList.push(newUser);
        
         console.log(JSON.stringify(response));
@@ -306,6 +398,50 @@ console.log('Failure in events call');
 
     });
   }
+  //$scope.volunteers= user ;
+   $scope.Users=UsersList;
+
+
+}
+
+//////
+ function setVolunteers(joined_members) {
+  var listOfjoined=[];
+  if(joined_members){
+    listOfjoined=joined_members.split(',');
+              }
+
+              $scope.listOfjoined=listOfjoined;
+
+             // $scope.joinedMembers = listOfjoined;
+              var UsersList=[];
+
+                for(var i=0;i<listOfjoined.length;i++){
+
+    securityModel.getVolunteers(listOfjoined[i]).then(function(response) {
+
+       var user = response.data || response;
+                             
+                               user.extras.points_accumulated = Number(user.extras.points_accumulated) + 10;
+
+                               securityModel.postVolunteersPoints(listOfjoined[i-1],user).then(function(response) {
+                                console.log(JSON.stringify(response));
+                               }
+                               ).catch(function(err) {
+        console.log('Failure in getVolunteers call');
+
+
+    });
+                              
+       
+        console.log(JSON.stringify(response));
+    }).catch(function(err) {
+        console.log('Failure in getVolunteers call');
+
+
+    });
+  }
+  //$scope.volunteers= user ;
    $scope.Users=UsersList;
 
 
