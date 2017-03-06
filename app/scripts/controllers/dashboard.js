@@ -23,6 +23,10 @@ angular.module('ghmcApp')
             pointFormat: '<b>{point.percentage:.1f}%</b>'
         },
 
+        credits: {
+      enabled: false
+  },
+
         plotOptions: {
         pie: {
                 allowPointSelect: true,
@@ -678,6 +682,9 @@ closedArray.push(dummyObj.closed);
     chart: {
         type: 'column'
     },
+    credits: {
+      enabled: false
+  },
     title: {
         text: '<b>Event Location wise and Status wise</b>'
     },

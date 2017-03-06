@@ -354,13 +354,13 @@
     <tbody>
       <tr ng-click="setSelected(event.id)" class="linkStyle" ng-class="{selected : event.id === selectedValue}" ng-repeat="event in filteredEvents | orderBy:sortType:sortReverse | filter:searchFish.extras.grievance_location">
         <td>{{event.created | date:'yyyy-MM-dd'||'  ---'}}</td>
-        <td><span ng-if="(event.status!='Created') ">{{event.start | date:'yyyy-MM-dd'}}</span><span ng-if="(event.status=='Created')">---</span> </td>
+        <td><span ng-if="(event.status!='Created')&&(event.status!='Rejected') ">{{event.start | date:'yyyy-MM-dd'}}</span><span ng-if="(event.status=='Created')||(event.status=='Rejected')">---</span> </td>
         <td>{{userNamesMap[event.userId]}} </td>
         <td>{{ event.extras.grievance_type ||'  ---'}}</td>
         <td>{{ event.extras.grievance_location}}</td>
         <td>{{ event.extras.members_required ||'  ---'}}</td>
         <td>{{ event.extras.joined_members_count||'  ---' }}</td>
-        <td><span ng-if="(event.status=='Created') ">Pending</span><span ng-if="(event.status!='Created') ">{{ event.status ||'  ---'}}</span></td>
+        <td><span ng-if="(event.status=='Created')" ng-class="event.status=='Created' ? 'blue' : black" >Pending</span><span ng-if="(event.status!='Created') " ng-class="event.status=='Created' ? 'blue' : event.status==='Approved' ? 'green' : event.status==='Rejected' ? 'red' : event.status==='Submitted' ? 'orange' : event.status==='Closed' ? 'black': 'black'">{{ event.status ||'  ---'}}</span></td>
        <td> <button data-toggle="modal" data-target="#myModal" ng-click="selectedEvent(event)" class="btn mini blue-stripe">Edit</button></td>
       </tr>
     </tbody>

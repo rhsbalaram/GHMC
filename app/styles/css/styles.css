@@ -97,6 +97,32 @@ legend.scheduler-border {
 
 }
 
+.blue{
+
+	color: #1f5dea;
+
+}
+.green{
+
+color: #43cb83;
+}
+
+
+.red {
+    color: #c60000; 
+}
+
+.orange{
+	color: #ff9000;
+
+}
+.black{
+
+color: #333333;
+
+}
+
+
 .selected{
 	background: #deeade;
 	outline: -webkit-focus-ring-color auto 5px;
