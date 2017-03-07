@@ -290,7 +290,7 @@ $scope.selectedEvent=null;
         //$scope.myModal.dismiss('cancel');
          $('#myModal').modal('hide');
 
-         if(event.status=="Closed") {
+         if((event.status=="Closed")&&(event.extras.previous_status!="Closed")) {
 
           setVolunteers(event.extras.joined_members);
 
@@ -312,13 +312,14 @@ $scope.selectedEvent=null;
 
          }
 
-         else if(event.status=="Approved") {
+         else if((event.status=="Approved")&&(event.extras.previous_status!="Approved")) {
 
           setVolunteers(event.userId);
 
           
          }
 
+         event.extras.previous_status=event.status;
 
          securityModel.postEventDetails(event).then(function(response) {
        
@@ -436,10 +437,12 @@ console.log('Failure in events call');
               var UsersList=[];
 
                 for(var i=0;i<listOfjoined.length;i++){
+                  var joinedMember=listOfjoined[i];
 
-    securityModel.getVolunteers(listOfjoined[i]).then(function(response) {
+    securityModel.getVolunteers(joinedMember).then(function(response) {
 
        var user = response.data || response;
+       var joinedMember=joinedMember;
 
        if(user.extras.points_accumulated==undefined){
         user.extras.points_accumulated = 0 ;
@@ -447,7 +450,7 @@ console.log('Failure in events call');
                              
                                user.extras.points_accumulated = Number(user.extras.points_accumulated) + 10;
 
-                               securityModel.postVolunteersPoints(listOfjoined[i-1],user).then(function(response) {
+                               securityModel.postVolunteersPoints(user.id,user).then(function(response) {
                                 console.log(JSON.stringify(response));
                                }
                                ).catch(function(err) {
