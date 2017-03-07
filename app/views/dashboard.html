@@ -62,7 +62,7 @@
                         </div>
 
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" ng-show="event.extras.joined_members_count!=0">
                     <div class="row">
    <!-- <div class="col-md-12 box-blocks"> -->
         <!-- <div class="control-label1 col-md-4"> -->
@@ -92,19 +92,19 @@
   </div>
 
                     <div class="form-group">
-                        <label class="control-label1 col-md-4" for="members">Members Required:</label>
+                        <label class="control-label1 col-md-4" for="members">Members Required</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control" ng-model="event.extras.members_required" placeholder="Enter number">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label1 col-md-4" for="date">Date:</label>
+                        <label class="control-label1 col-md-4" for="date">Start Date</label>
                         <div class="col-md-8">
                             <input type="date" class="form-control" ng-model="event.start"  placeholder="Enter Date">
                         </div>
                     </div>
                      <div class="form-group">
-                        <label class="control-label1 col-md-4" for="status">Change Status:</label>
+                        <label class="control-label1 col-md-4" for="status">Change Status</label>
                         <div class="col-md-8">
                         <select class="form-control" id="status" ng-model="event.status">
                             <option value="Approved">Approved</option>
@@ -117,8 +117,11 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
+                        <div class="col-sm-offset-2 col-sm-4">
                             <button type="submit" ng-click="updateEvent(event)" class="btn btn-submit">Submit</button>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="button" class="btn btn-submit" data-dismiss="modal">Cancel</button>
                         </div>
                     </div>
                 </form>
@@ -267,7 +270,7 @@
     
     <div class="col-md-12 dashboard-block">
    <form class="form-inline" style="line-height: 50px;">
-    <span style="font-size: 20px;"><b>{{EventText}}</b></span>
+    <span style="font-size: 20px;"><b>{{EventText=='Created Grievances'?'Pending Grievances':EventText}}</b></span>
      <div class="form-group" style="position: absolute;right: 20px;top: 10px">
             
                         <select class="form-control col-sm-2" ng-model="searchFish" ng-options="filterevent.extras.grievance_location for filterevent in filteredEvents | unique:'extras.grievance_location'">
@@ -278,7 +281,7 @@
                         <div class="form-group" style="position: absolute;right: 250px;top: 10px">
                          <select class="form-control col-sm-2" ng-model="selectedItem" ng-change="getEventFilter(selectedItem)">
                         <option value="" selected>Status</option>
-                        <option value="Upcoming" >Upcoming</option>
+                        <!-- <option value="Upcoming" >Upcoming</option> -->
                          <option value="Created" >Pending</option>
                          <option value="Approved" >Approved</option>
                          <option value="Rejected" >Rejected</option>
@@ -292,57 +295,57 @@
     <thead>
       <tr>
         <td>
-          <a href="" ng-click="sortType = 'created'; sortReverse = !sortReverse">
-            Post Date
+          <a href="" ng-click="sortType = 'created'; sortReverse = !sortReverse"  style="font-size: 15px">
+            <b>Post Date</b>
             <span ng-show="sortType == 'created' && !sortReverse" class="fa fa-caret-down"></span>
             <span ng-show="sortType == 'created' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
         <td>
-          <a href="" ng-click="sortType = 'start'; sortReverse = !sortReverse">
-            Event Date
+          <a href="" ng-click="sortType = 'start'; sortReverse = !sortReverse" style="font-size: 15px">
+            <b>Event Date</b>
             <span ng-show="sortType == 'start' && !sortReverse" class="fa fa-caret-down"></span>
             <span ng-show="sortType == 'start' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
         <td>
-          <a href="" ng-click="sortType = 'userId'; sortReverse = !sortReverse">
-            Posted By
+          <a href="" ng-click="sortType = 'userId'; sortReverse = !sortReverse" style="font-size: 15px">
+            <b>Posted By</b>
             <span ng-show="sortType == 'userId' && !sortReverse" class="fa fa-caret-down"></span>
             <span ng-show="sortType == 'userId' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
         <td>
-          <a href="" ng-click="sortType = 'extras.grievance_type'; sortReverse = !sortReverse">
-            Issue Type
+          <a href="" ng-click="sortType = 'extras.grievance_type'; sortReverse = !sortReverse" style="font-size: 15px">
+            <b>Issue Type</b>
             <span ng-show="sortType == 'extras.grievance_type' && !sortReverse" class="fa fa-caret-down"></span>
             <span ng-show="sortType == 'extras.grievance_type' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
         <td>
-          <a href="" ng-click="sortType = 'extras.grievance_location'; sortReverse = !sortReverse">
-           Location
+          <a href="" ng-click="sortType = 'extras.grievance_location'; sortReverse = !sortReverse" style="font-size: 15px">
+           <b>Location</b>
             <span ng-show="sortType == 'extras.grievance_location' && !sortReverse" class="fa fa-caret-down"></span>
             <span ng-show="sortType == 'extras.grievance_location' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
         <td>
-          <a href="" ng-click="sortType = 'extras.members_required'; sortReverse = !sortReverse">
-           Volunteers Required
+          <a href="" ng-click="sortType = 'extras.members_required'; sortReverse = !sortReverse" style="font-size: 15px">
+           <b>Volunteers Required</b>
             <span ng-show="sortType == 'extras.members_required' && !sortReverse" class="fa fa-caret-down"></span>
             <span ng-show="sortType == 'extras.members_required' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
         <td>
-          <a href="" ng-click="sortType = 'extras.joined_members_count'; sortReverse = !sortReverse">
-           Volunteers Joined
+          <a href="" ng-click="sortType = 'extras.joined_members_count'; sortReverse = !sortReverse" style="font-size: 15px">
+           <b>Volunteers Joined</b>
             <span ng-show="sortType == 'extras.joined_members_count' && !sortReverse" class="fa fa-caret-down"></span>
             <span ng-show="sortType == 'extras.joined_members_count' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
         <td>
-          <a href="" ng-click="sortType = 'status'; sortReverse = !sortReverse">
-          Status
+          <a href="" ng-click="sortType = 'status'; sortReverse = !sortReverse" style="font-size: 15px">
+          <b>Status</b>
             <span ng-show="sortType == 'status' && !sortReverse" class="fa fa-caret-down"></span>
             <span ng-show="sortType == 'status' && sortReverse" class="fa fa-caret-up"></span>
           </a>

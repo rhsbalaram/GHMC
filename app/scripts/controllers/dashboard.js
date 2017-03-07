@@ -196,6 +196,7 @@ $scope.chartConfig.series = [{
            //getDocuments($scope.selectedValue);
            $scope.setSelected($scope.selectedValue);
            getFilterLocations();
+           modifyTheExpiredEvents();
 
 
                         }).catch(function(err) {
@@ -568,6 +569,7 @@ console.log('Failure in events call');
  $scope.Submitted=0;
   $scope.Closed=0;
  $scope.getEventFilter=function(filterEvent){
+  $scope.selectedItem=filterEvent;
   $scope.searchFish='';
 $scope.EventText=filterEvent+' Grievances'
   $scope.selectedFilterStatus=filterEvent;
@@ -654,7 +656,7 @@ var approvedArray=[];
  var closedArray=[];
 
 angular.forEach(locationWiseData, function(dummyObj){ 
-locationsArray.push(dummyObj.location);
+locationsArray.push('<b>'+dummyObj.location+'</b>');
 createdArray.push(dummyObj.created);
 approvedArray.push(dummyObj.approved);
 rejectedArray.push(dummyObj.rejected);
@@ -665,7 +667,7 @@ closedArray.push(dummyObj.closed);
 
   
     $scope.chartOptions =  {
-      colors: ['#1f5dea', '#43cb83', '#c60000', '#ff9000','#333333'],
+      colors: ['#ff9000', '#43cb83','#1f5dea',  '#c60000','#333333'],
     chart: {
         type: 'column'
     },
@@ -700,27 +702,40 @@ closedArray.push(dummyObj.closed);
         column: {
             pointPadding: 0.2,
             borderWidth: 0
+        },
+        series: {
+            cursor: 'pointer',
+            point: {
+                events: {
+                    click: function () {
+                     $scope.getEventFilter('');
+                        //alert('Category: ' + this.category + ', value: ' + this.y);
+                        $scope.searchFish.extras.grievance_location=this.category;
+                        console.log('------------->'+$scope.searchFish.extras.grievance_location);
+                    }
+                }
+            }
         }
     },
-    series: [{
-        name: 'Pending',
+    series: [ {
+        name: 'SUBMITTED',
+        data: submittedArray
+
+    }, {
+        name: 'APPROVED',
+        data: approvedArray
+
+    },{
+        name: 'PENDING',
         data: createdArray
 
     }, {
-        name: 'Approved',
-        data: approvedArray
-
-    }, {
-        name: 'Rejected',
+        name: 'REJECTED',
         data: rejectedArray
-
-    }, {
-        name: 'Submitted',
-        data: submittedArray
 
     },
    {
-        name: 'Closed',
+        name: 'CLOSED',
         data: closedArray
 
     }]
@@ -764,7 +779,37 @@ console.log("----------->"+JSON.stringify($scope.chartOptions));
         /////
  $scope.chartOptions =  {};
 //////
-     $scope.currentdate=new Date();       
+     $scope.currentdate=new Date();    
+
+
+     function modifyTheExpiredEvents(){
+      var expiredEvents= $filter('filter')($scope.events, function(event){
+            
+                return (event.status=='Approved') && (new Date(event.start)<new Date());
+            });
+
+      console.log('------------------------------------------------>'+JSON.stringify(expiredEvents));
+      angular.forEach(expiredEvents, function(expireEvent){ 
+        expireEvent.start=new Date();
+        expireEvent.status='Created'
+       
+        expireEvent.extras.members_required="";
+        expireEvent.extras.joined_members="";
+        securityModel.postEventDetails(expireEvent).then(function(response) {
+          console.log('------------------------------------------------------>successfull for expired conversion');
+           }).catch(function(err) {
+console.log('------------------------------------------------------>failure for expired conversion');
+                       
+
+                    });
+
+
+
+
+      });
+
+
+     };   
 
 
   });
