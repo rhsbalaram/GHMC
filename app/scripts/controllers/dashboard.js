@@ -62,7 +62,7 @@ angular.module('ghmcApp')
         }],
         
         title: {
-            text: '<b>Issues Summary</b>'
+            text: '<b>Type of Grievances Statistics</b>'
         },
 
         loading: false
@@ -293,22 +293,6 @@ $scope.selectedEvent=null;
          if((event.status=="Closed")&&(event.extras.previous_status!="Closed")) {
 
           setVolunteers(event.extras.joined_members);
-
-          //var UsersList =[];
-
-      /*   var Events=$scope.events;
-       for(var i=0;i<Events.length;i++){
-
-        if(Events[i].id==event.id){
-
-          Events[i].extras.joined_members
-
-         setVolunteers(Events[i].extras.joined_members);
-
-        }
-
-
-       }*/
 
          }
 
@@ -585,7 +569,7 @@ console.log('Failure in events call');
   $scope.Closed=0;
  $scope.getEventFilter=function(filterEvent){
   $scope.searchFish='';
-$scope.EventText=filterEvent+' Events'
+$scope.EventText=filterEvent+' Grievances'
   $scope.selectedFilterStatus=filterEvent;
   $scope.sortType     = null; // set the default sort type
   $scope.sortReverse  = null;  // set the default sort order
@@ -689,10 +673,10 @@ closedArray.push(dummyObj.closed);
       enabled: false
   },
     title: {
-        text: '<b>Event Location wise and Status wise</b>'
+        text: '<b>Grievances Statistics</b>'
     },
     subtitle: {
-        text: 'GHMC'
+        text: ''
     },
     xAxis: {
         categories:locationsArray,
@@ -701,7 +685,7 @@ closedArray.push(dummyObj.closed);
     yAxis: {
         min: 0,
         title: {
-            text: 'Greviences(count)'
+            text: '<b>Grievances (count)</b>'
         }
     },
     tooltip: {
