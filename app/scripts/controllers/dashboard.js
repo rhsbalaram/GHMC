@@ -779,13 +779,15 @@ console.log("----------->"+JSON.stringify($scope.chartOptions));
         /////
  $scope.chartOptions =  {};
 //////
-     $scope.currentdate=new Date();    
+     $scope.currentdate=new Date(); 
+     var today=new Date();
+     today.setDate(today.getDate() - 1);   
 
 
      function modifyTheExpiredEvents(){
       var expiredEvents= $filter('filter')($scope.events, function(event){
             
-                return (event.status=='Approved') && (new Date(event.start)<new Date());
+                return (event.status=='Approved') && (new Date(event.start)< today );
             });
 
       console.log('------------------------------------------------>'+JSON.stringify(expiredEvents));
