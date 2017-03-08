@@ -265,7 +265,7 @@
  
 </div>
  
-  <div class="col-md-12">
+  <div id='bottom' class="col-md-12">
   <div class="row" style="padding-left: 15px">
     
     <div class="col-md-12 dashboard-block">
@@ -273,8 +273,9 @@
     <span style="font-size: 20px;"><b>{{EventText=='Created Grievances'?'Pending Grievances':EventText}}</b></span>
      <div class="form-group" style="position: absolute;right: 20px;top: 10px">
             
-                        <select class="form-control col-sm-2" ng-model="searchFish" ng-options="filterevent.extras.grievance_location for filterevent in filteredEvents | unique:'extras.grievance_location'">
+                        <select class="form-control col-sm-2" ng-model="searchFish" >
                         <option value="" selected>Location</option>
+                        <option ng-repeat="filterevent in filteredEvents | unique:'extras.grievance_location'" value={{filterevent.extras.grievance_location}}>{{filterevent.extras.grievance_location}}</option>
                           
                         </select>
                         </div>
@@ -355,7 +356,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-click="setSelected(event.id)" class="linkStyle" ng-class="{selected : event.id === selectedValue}" ng-repeat="event in filteredEvents | orderBy:sortType:sortReverse | filter:searchFish.extras.grievance_location">
+      <tr ng-click="setSelected(event.id)" class="linkStyle" ng-class="{selected : event.id === selectedValue}" ng-repeat="event in filteredEvents | orderBy:sortType:sortReverse | filter:searchFish">
         <td>{{event.created | date:'yyyy-MM-dd'||'  ---'}}</td>
         <td><span ng-if="(event.status!='Created')&&(event.status!='Rejected') ">{{event.start | date:'yyyy-MM-dd'}}</span><span ng-if="(event.status=='Created')||(event.status=='Rejected')">---</span> </td>
         <td>{{userNamesMap[event.userId]}} </td>

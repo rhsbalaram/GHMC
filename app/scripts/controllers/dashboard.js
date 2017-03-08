@@ -71,7 +71,7 @@ angular.module('ghmcApp')
     return chartConfig;
 })
           
-  .controller('dashboardCtrl', function (SecureStorage,securityModel,$scope,$q,$rootScope,Chart,$filter,$timeout) {
+  .controller('dashboardCtrl', function (SecureStorage,securityModel,$scope,$q,$rootScope,Chart,$filter,$timeout,$location,$anchorScroll) {
 
      $scope.chartConfig = Chart;
   
@@ -79,7 +79,7 @@ angular.module('ghmcApp')
   	///////maps coding
     var markersMap=[];
 
-  	
+  	var firsttimeDashboard='noScroll';
       var mapOptions = {
       	//center:myLatlng,
               zoom:10,
@@ -597,6 +597,15 @@ $scope.EventText=filterEvent+' Grievances'
                          // $scope.members =$scope.events[0].extras.joined_members;
              $scope.selectedValue=  firstEvent.id;
              $scope.setSelected($scope.selectedValue);
+             if(firsttimeDashboard!="noScroll"){
+              
+
+              $location.hash('bottom');
+
+      // call $anchorScroll()
+      $anchorScroll();
+    }
+    firsttimeDashboard='scroll';
 
  };
 
@@ -710,8 +719,10 @@ closedArray.push(dummyObj.closed);
                     click: function () {
                      $scope.getEventFilter('');
                         //alert('Category: ' + this.category + ', value: ' + this.y);
-                        $scope.searchFish.extras.grievance_location=this.category;
-                        console.log('------------->'+$scope.searchFish.extras.grievance_location);
+                        var catega=this.category.replace("<b>", "");
+                        catega=catega.replace("</b>", "");
+                        $scope.searchFish=catega;
+                        console.log('------------->'+$scope.searchFish);
                     }
                 }
             }
