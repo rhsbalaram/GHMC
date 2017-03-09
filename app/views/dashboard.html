@@ -24,9 +24,10 @@
 			<img  ng-src="images/ghmc.gif" alt="GHMC" />
 
 			<ul>
-				<li><a href="#">Settings</a></li>
+				<li><a href="">Settings</a></li>
 				
-				<li><a href="#" class="highlight">Logout</a></li>
+				<li> <a  href="" ng-click="signout()" class="highlight">Logout </a></li>
+        <!-- <li><a href="" class="highlight">Logout</a></li> -->
 			</ul>
 		</div>
 
@@ -44,7 +45,7 @@
                 <h4 class="modal-title">{{event.name}}</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal">
+                <form name="myForm" class="form-horizontal">
                     <div class="form-group">
                         <label class="control-label1 col-md-4">Issue Description</label>
                         <div class="col-md-8">
@@ -91,10 +92,11 @@
   </div>
   </div>
 
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{ 'has-error': myForm.member.$dirty && myForm.member.$error.required }">
                         <label class="control-label1 col-md-4" for="members">Members Required</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" ng-model="event.extras.members_required" placeholder="Enter number">
+                            <input type="text" name="member" class="form-control" ng-model="event.extras.members_required" placeholder="Enter number" ng-pattern="regex" required>
+                            <span ng-show="myForm.member.$dirty && myForm.member.$error.required" class="help-block">Members number is required</span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -110,15 +112,15 @@
                             <option value="Approved">Approved</option>
                             <option value="Rejected">Rejected</option>
                             <option value="Closed">Closed</option>
-                            <option value="Started">Started</option>
-                            <option value="Submitted">Submitted</option>
-                            <option value="Created">Created</option>
+                            <option value="Started" disabled>Started</option>
+                            <option value="Submitted" disabled>Submitted</option>
+                            <option value="Created" disabled>Created</option>
                         </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-4">
-                            <button type="submit" ng-click="updateEvent(event)" class="btn btn-submit">Submit</button>
+                            <button  ng-disabled="myForm.$invalid" type="submit" ng-click="updateEvent(event)" class="btn btn-submit">Submit</button>
                         </div>
                         <div class="col-sm-2">
                             <button type="button" class="btn btn-submit" data-dismiss="modal">Cancel</button>

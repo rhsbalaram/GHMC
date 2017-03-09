@@ -37,7 +37,9 @@ angular.module('ghmcApp')
                 model.logout = function() {
                     loggedInUserDetails = null;
                     secureStorage.remove(LOGGED_USER_DETAILS);
-                    return Restangular.all('Users/logout').post();
+                    secureStorage.remove('access_token');
+                    $state.go('signin');
+                    //return Restangular.all('Users/logout').post();
                 };
 
                 model.isUserProductAdmin = function () {

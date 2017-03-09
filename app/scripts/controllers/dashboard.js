@@ -71,7 +71,16 @@ angular.module('ghmcApp')
     return chartConfig;
 })
           
-  .controller('dashboardCtrl', function (SecureStorage,securityModel,$scope,$q,$rootScope,Chart,$filter,$timeout,$location,$anchorScroll) {
+  .controller('dashboardCtrl', function (SecureStorage,securityModel,$scope,$q,$rootScope,Chart,$filter,$timeout,$location,$anchorScroll,$state) {
+
+
+    var token = SecureStorage.get('access_token');
+
+    if(token==null) {
+
+      $state.go('signin');
+
+    }
 
      $scope.chartConfig = Chart;
   
@@ -256,12 +265,20 @@ console.log('Failure in events call');
 }
 
 $scope.selectedEvent=null;
+
     $scope.selectedEvent = function(event) {
       
-  
+
+
+  //event.extras.members_required = Number(event.extras.members_required);
+
        $scope.event = event;
 
       // $scope.event.created =Date.parse(event.created);
+
+      
+
+      $scope.regex = '\\d+';
 
        $scope.event.start = new Date(event.start);
        /*getDocuments(idSelectedVote);
@@ -280,13 +297,18 @@ $scope.selectedEvent=null;
       
   }
 
+$scope.signout= function() {
 
+    securityModel.logout();
+
+   }
     
 
     $scope.updateEvent=null;
     $scope.updateEvent = function(event) {
       
-  
+    //event.extras.members_required =  event.extras.members_required.toString();
+
        $scope.event = event;
         //$scope.myModal.dismiss('cancel');
          $('#myModal').modal('hide');
@@ -563,6 +585,7 @@ console.log('Failure in events call');
   
   // table coding 
  //filters
+ $scope.Pending=0;
  $scope.Upcoming=0;
  $scope.Approved=0;
  $scope.Rejected=0;
